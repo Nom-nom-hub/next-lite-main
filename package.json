@@ -1,7 +1,7 @@
 {
-  "name": "@next-lite/core",
+  "name": "next-lite-framework",
   "version": "0.1.0",
-  "description": "A lightweight version of Next.js focusing on speed and simplicity",
+  "description": "A lightweight, high-performance alternative to Next.js built with esbuild. Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box, all while maintaining a minimal footprint and blazing-fast build times.",
   "main": "dist/index.js",
   "bin": {
     "create-next-lite-app": "./scripts/create-app.js"
@@ -27,12 +27,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/teckmill/next-lite"
+    "url": "https://github.com/teckmill/next-lite-main"
   },
   "bugs": {
-    "url": "https://github.com/teckmill/next-lite/issues"
+    "url": "https://github.com/teckmill/next-lite-main/issues"
   },
-  "homepage": "https://github.com/teckmill/next-lite#readme",
+  "homepage": "https://github.com/teckmill/next-lite-main#readme",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "esbuild": "0.17.19",
