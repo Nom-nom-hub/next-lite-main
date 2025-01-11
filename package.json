@@ -1,0 +1,58 @@
+{
+  "name": "next-lite",
+  "version": "0.1.0",
+  "description": "A lightweight version of Next.js focusing on speed and simplicity",
+  "main": "dist/index.js",
+  "bin": {
+    "create-next-lite-app": "./scripts/create-app.js"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "start": "node scripts/prod-server.js",
+    "clean": "rd /s /q .next dist",
+    "test": "echo \"No tests yet\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "nextjs",
+    "framework",
+    "typescript",
+    "esbuild",
+    "fast",
+    "lightweight"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/next-lite"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/next-lite/issues"
+  },
+  "homepage": "https://github.com/yourusername/next-lite#readme",
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "esbuild": "0.17.19",
+    "fs-extra": "^11.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "postcss": "^8.4.49",
+    "postcss-modules": "^6.0.1",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

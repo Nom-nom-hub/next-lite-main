@@ -1,0 +1,1 @@
+module.exports={get(e,t){t.json({message:"Hello from Next-Lite API!",timestamp:new Date().toISOString(),query:e.query})},post(e,t){t.json({message:"Received POST request",body:e.body,timestamp:new Date().toISOString()})}};
