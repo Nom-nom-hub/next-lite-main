@@ -1,0 +1,28 @@
+# Source
+example/
+scripts/
+src/
+
+# Tests
+__tests__/
+coverage/
+
+# Build
+.next/
+
+# Config files
+.gitignore
+.eslintrc
+.prettierrc
+tsconfig.json
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,5 +1,5 @@
 {
-  "name": "next-lite",
+  "name": "@next-lite/core",
   "version": "0.1.0",
   "description": "A lightweight version of Next.js focusing on speed and simplicity",
   "main": "dist/index.js",
@@ -23,16 +23,16 @@
     "fast",
     "lightweight"
   ],
-  "author": "Your Name",
+  "author": "Teck",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/next-lite"
+    "url": "https://github.com/teckmill/next-lite"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/next-lite/issues"
+    "url": "https://github.com/teckmill/next-lite/issues"
   },
-  "homepage": "https://github.com/yourusername/next-lite#readme",
+  "homepage": "https://github.com/teckmill/next-lite#readme",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "esbuild": "0.17.19",
