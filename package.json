@@ -1,6 +1,6 @@
 {
   "name": "next-lite-framework",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A lightweight, high-performance alternative to Next.js built with esbuild. Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box, all while maintaining a minimal footprint and blazing-fast build times.",
   "main": "dist/index.js",
   "bin": {
