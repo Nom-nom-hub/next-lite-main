@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Nom-nom-hub/next-lite-main">
-    <img src="https://raw.githubusercontent.com/Nom-nom-hub/next-lite-main/main/public/next-lite-logo.svg" height="128">
+    <img src="public/next-lite-logo.svg" alt="Next-Lite logo" width="128" height="128">
     <h1 align="center">Next-Lite</h1>
   </a>
 </p>
