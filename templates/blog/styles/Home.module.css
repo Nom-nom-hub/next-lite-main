@@ -1,0 +1,46 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 2rem 0;
+  text-align: center;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 3rem;
+  color: #7928CA;
+}
+
+.description {
+  margin: 1rem 0 0;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  color: #666;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 0;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.footer {
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  text-align: center;
+  color: #666;
+}

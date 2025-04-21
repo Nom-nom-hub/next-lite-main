@@ -13,18 +13,28 @@ A lightweight, high-performance alternative to Next.js that prioritizes speed an
 
 - ⚡️ **Lightning Fast Development**
   - Near-instant builds with esbuild
-  - Hot Module Replacement (HMR) for rapid development
-  - Fast refresh for React components
+  - Hot Module Replacement (HMR) with state preservation
+  - Enhanced error overlay for better debugging
+
+- 🖥️ **Flexible Rendering Options**
+  - Client-side rendering (CSR) by default
+  - Server-side rendering (SSR) support
+  - Static site generation for optimal performance
 
 - 📁 **Intuitive File-Based Routing**
   - Automatic route generation based on your file structure
-  - Dynamic routing support
+  - Dynamic routing support with parameters
   - API routes for backend functionality
 
 - 🎨 **Modern Styling Solutions**
   - CSS Modules support out of the box
-  - Scoped styles with zero configuration
-  - PostCSS integration
+  - Global CSS support
+  - Optimized CSS extraction in production
+
+- 🔧 **Environment Configuration**
+  - Support for .env files
+  - Environment variables in both client and server
+  - Runtime configuration options
 
 - 💪 **TypeScript First**
   - First-class TypeScript support
@@ -64,11 +74,20 @@ my-app/
 # Start development server with HMR
 npm run dev
 
-# Build for production
+# Build for production (client-side rendering)
 npm run build
+
+# Build with server-side rendering
+npm run build -- --ssr
+
+# Build as static site
+npm run build -- --static
 
 # Start production server
 npm start
+
+# Start with SSR enabled
+npm start -- --ssr
 
 # Clean build files
 npm run clean
@@ -82,6 +101,10 @@ npm run clean
 | Production Build    | ~2s       | ~20s    |
 | Bundle Size (Base)  | ~80KB     | ~200KB  |
 | Memory Usage (Dev)  | ~200MB    | ~500MB  |
+| SSR Support         | ✅        | ✅      |
+| Static Generation   | ✅        | ✅      |
+| CSS Modules         | ✅        | ✅      |
+| TypeScript Support  | ✅        | ✅      |
 
 ## Contributing 🤝
 

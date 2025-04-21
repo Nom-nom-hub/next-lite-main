@@ -1,0 +1,79 @@
+/**
+ * Next-Lite configuration file
+ * This file is used to customize the behavior of Next-Lite
+ */
+module.exports = {
+  // Server configuration
+  server: {
+    port: 3000,
+    host: 'localhost',
+  },
+  
+  // Build configuration
+  build: {
+    target: 'es2015',
+    minify: true,
+    sourcemap: true,
+    outDir: 'dist',
+  },
+  
+  // Rendering options
+  rendering: {
+    ssr: false,
+    staticExport: false,
+  },
+  
+  // Image optimization
+  images: {
+    domains: ['example.com', 'images.unsplash.com'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/webp'],
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: false,
+  },
+  
+  // Environment variables
+  env: {
+    CUSTOM_KEY: 'custom-value',
+  },
+  
+  // Internationalization
+  i18n: {
+    locales: ['en', 'fr', 'es'],
+    defaultLocale: 'en',
+  },
+  
+  // Plugins
+  plugins: [
+    // Example plugin
+    {
+      name: 'example-plugin',
+      setup: (build) => {
+        // Plugin code here
+      },
+    },
+  ],
+  
+  // Middleware
+  middleware: [
+    // Example middleware
+    (req, res, next) => {
+      // Middleware code here
+      next();
+    },
+  ],
+  
+  // Webpack configuration (for future use)
+  webpack: (config) => {
+    // Customize webpack config
+    return config;
+  },
+  
+  // PostCSS configuration
+  postcss: {
+    plugins: [
+      // PostCSS plugins
+    ],
+  },
+};

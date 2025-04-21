@@ -1,0 +1,27 @@
+.container {
+  min-height: 100vh;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 3rem;
+  color: #7928CA;
+}
+
+.description {
+  line-height: 1.5;
+  font-size: 1.2rem;
+}
+
+code {
+  background: #f0f0f0;
+  border-radius: 5px;
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+}

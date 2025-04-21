@@ -1,0 +1,20 @@
+{
+  "name": "next-lite-i18n-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ../../scripts/example-dev.js i18n",
+    "build": "node ../../scripts/build.js",
+    "start": "node ../../scripts/prod-server.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.12",
+    "fs-extra": "^11.2.0",
+    "ws": "^8.18.0",
+    "dotenv": "^16.3.1"
+  }
+}
