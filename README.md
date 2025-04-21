@@ -1,9 +1,7 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Nom-nom-hub/next-lite-main/main/public/next-lite-logo.svg" alt="next-lite logo" width="180"/>
-    <h1 align="center">Next-Lite</h1>
-  </a>
+  <img src="public/next-lite-logo.svg" alt="next-lite logo" width="180"/>
+  <h1 align="center">Next-Lite</h1>
 </p>
-
 
 <p align="center">
   <a aria-label="NPM version" href="https://www.npmjs.com/package/next-lite-framework">
@@ -17,7 +15,11 @@
   </a>
 </p>
 
-Next-Lite is a lightweight, high-performance alternative to Next.js built with esbuild. Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box, all while maintaining a minimal footprint and blazing-fast build times.
+<p align="center">
+  <b>Next-Lite is a lightweight, high-performance alternative to Next.js built with esbuild.</b><br>
+  Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box,<br>
+  all while maintaining a minimal footprint and blazing-fast build times.
+</p>
 
 ## Getting Started
 
