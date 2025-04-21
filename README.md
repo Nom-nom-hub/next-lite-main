@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://github.com/Nom-nom-hub/next-lite-main">
-    <img src="public/next-lite-logo.svg" alt="Next-Lite logo" width="128" height="128">
+  <img src="https://raw.githubusercontent.com/Nom-nom-hub/next-lite-main/main/public/next-lite-logo.svg" alt="next-lite logo" width="180"/>
     <h1 align="center">Next-Lite</h1>
   </a>
 </p>
+
 
 <p align="center">
   <a aria-label="NPM version" href="https://www.npmjs.com/package/next-lite-framework">
@@ -16,6 +16,8 @@
     <img alt="" src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&logo=github&labelColor=000000&logoWidth=20">
   </a>
 </p>
+
+Next-Lite is a lightweight, high-performance alternative to Next.js built with esbuild. Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box, all while maintaining a minimal footprint and blazing-fast build times.
 
 ## Getting Started
 
@@ -31,6 +33,8 @@ Next-Lite is a lightweight, high-performance React framework that prioritizes sp
 
 ### Key Features
 
+Next-Lite is designed to provide a fast, lightweight, and developer-friendly experience. Here are some of the key features:
+
 - **Blazing Fast Build Times** - Built on esbuild, offering build times up to 100x faster than traditional bundlers
 - **Zero Configuration** - Start coding immediately with sensible defaults
 - **Minimal Bundle Size** - Optimized for production with code splitting and tree shaking
@@ -45,6 +49,8 @@ Next-Lite is a lightweight, high-performance React framework that prioritizes sp
 - **DevTools** - Built-in developer tools for debugging and performance monitoring
 
 ## Quick Start
+
+To get started with Next-Lite, run the following commands:
 
 ```bash
 # Create a new Next-Lite app
@@ -124,6 +130,11 @@ npm test                 # Run tests
 | Static Generation   | ✅        | ✅      |
 | CSS Modules         | ✅        | ✅      |
 | TypeScript Support  | ✅        | ✅      |
+| API Routes          | ✅        | ✅      |
+| File-Based Routing  | ✅        | ✅      |
+| HMR Support         | ✅        | ✅      |
+| DevTools Support    | ✅        | ❌      |
+
 
 ## Ecosystem
 
@@ -167,3 +178,28 @@ Next-Lite is [MIT licensed](LICENSE).
     <img src="https://img.shields.io/github/stars/Nom-nom-hub/next-lite-main?style=social" alt="Stars">
   </a>
 </p>
+
+<p align="center">
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/issues">
+    <img src="https://img.shields.io/github/issues/Nom-nom-hub/next-lite-main" alt="Issues">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/pulls">
+    <img src="https://img.shields.io/github/issues-pr/Nom-nom-hub/next-lite-main" alt="Pull Requests">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/Nom-nom-hub/next-lite-main" alt="License">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/Nom-nom-hub/next-lite-main" alt="Contributors">
+  </a>
+</p>
+
