@@ -1,47 +1,50 @@
-# Next-Lite 🚀
+<p align="center">
+  <a href="https://github.com/teckcode/next-lite">
+    <img src="https://raw.githubusercontent.com/teckcode/next-lite/main/public/next-lite-logo.png" height="128">
+    <h1 align="center">Next-Lite</h1>
+  </a>
+</p>
 
-A lightweight, high-performance alternative to Next.js that prioritizes speed and simplicity. Built with esbuild at its core, Next-Lite offers a streamlined development experience while maintaining the essential features modern web developers need.
+<p align="center">
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/next-lite-framework">
+    <img alt="" src="https://img.shields.io/npm/v/next-lite-framework.svg?style=for-the-badge&labelColor=000000">
+  </a>
+  <a aria-label="License" href="https://github.com/teckcode/next-lite/blob/main/LICENSE">
+    <img alt="" src="https://img.shields.io/npm/l/next-lite-framework.svg?style=for-the-badge&labelColor=000000">
+  </a>
+  <a aria-label="Join the community on GitHub" href="https://github.com/teckcode/next-lite/discussions">
+    <img alt="" src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&logo=github&labelColor=000000&logoWidth=20">
+  </a>
+</p>
 
-## Why Next-Lite? 🤔
+## Getting Started
 
-- **Blazing Fast** ⚡️ - Built on esbuild, offering build times up to 100x faster than traditional bundlers
-- **Zero Config** 📦 - Start coding immediately with sensible defaults
-- **Minimal Footprint** 🌱 - Small bundle sizes and minimal dependencies
-- **Developer Friendly** 💻 - Great DX with hot module replacement and instant feedback
+Visit [next-lite.dev](https://github.com/teckcode/next-lite) to get started with Next-Lite.
 
-## Core Features 🎯
+## Documentation
 
-- ⚡️ **Lightning Fast Development**
-  - Near-instant builds with esbuild
-  - Hot Module Replacement (HMR) with state preservation
-  - Enhanced error overlay for better debugging
+Visit [next-lite.dev/docs](https://github.com/teckcode/next-lite/tree/main/docs) to view the full documentation.
 
-- 🖥️ **Flexible Rendering Options**
-  - Client-side rendering (CSR) by default
-  - Server-side rendering (SSR) support
-  - Static site generation for optimal performance
+## Next-Lite: The React Framework for Performance
 
-- 📁 **Intuitive File-Based Routing**
-  - Automatic route generation based on your file structure
-  - Dynamic routing support with parameters
-  - API routes for backend functionality
+Next-Lite is a lightweight, high-performance React framework that prioritizes speed and simplicity. Built with esbuild at its core, Next-Lite offers a streamlined development experience while maintaining the essential features modern web developers need.
 
-- 🎨 **Modern Styling Solutions**
-  - CSS Modules support out of the box
-  - Global CSS support
-  - Optimized CSS extraction in production
+### Key Features
 
-- 🔧 **Environment Configuration**
-  - Support for .env files
-  - Environment variables in both client and server
-  - Runtime configuration options
+- **Blazing Fast Build Times** - Built on esbuild, offering build times up to 100x faster than traditional bundlers
+- **Zero Configuration** - Start coding immediately with sensible defaults
+- **Minimal Bundle Size** - Optimized for production with code splitting and tree shaking
+- **Developer Experience** - Hot Module Replacement with state preservation and enhanced error overlay
+- **Flexible Rendering** - Support for Client-Side Rendering, Server-Side Rendering, and Static Site Generation
+- **File-Based Routing** - Intuitive routing based on your file structure with dynamic route support
+- **API Routes** - Create API endpoints easily within your Next-Lite application
+- **TypeScript Support** - First-class TypeScript support with enhanced developer experience
+- **CSS Modules** - Built-in support for CSS Modules and global styles
+- **Environment Variables** - Simple environment configuration for all environments
+- **Plugin System** - Extend functionality with a powerful plugin ecosystem
+- **DevTools** - Built-in developer tools for debugging and performance monitoring
 
-- 💪 **TypeScript First**
-  - First-class TypeScript support
-  - Automatic type generation
-  - Enhanced developer experience with type safety
-
-## Quick Start 🏃‍♂️
+## Quick Start
 
 ```bash
 # Create a new Next-Lite app
@@ -54,9 +57,24 @@ cd my-app
 npm run dev
 ```
 
-Visit http://localhost:3000 to see your app in action!
+Visit [http://localhost:3000](http://localhost:3000) to see your app in action.
 
-## Project Structure 📂
+## Learn Next-Lite
+
+To learn more about Next-Lite, take a look at the following resources:
+
+- [Next-Lite Documentation](https://github.com/teckcode/next-lite/tree/main/docs) - learn about Next-Lite features and API.
+- [Learn Next-Lite](https://github.com/teckcode/next-lite/tree/main/examples) - an interactive Next-Lite tutorial.
+
+You can check out [the Next-Lite GitHub repository](https://github.com/teckcode/next-lite) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next-Lite app is to use the [Vercel Platform](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-lite) from the creators of Next.js.
+
+Check out our [Next-Lite deployment documentation](https://github.com/teckcode/next-lite/tree/main/docs/deployment.md) for more details.
+
+## Project Structure
 
 ```
 my-app/
@@ -65,35 +83,36 @@ my-app/
 │   ├── about.tsx    # About page
 │   └── api/         # API routes
 ├── public/          # Static files
+├── styles/          # CSS styles
+├── components/      # React components
+├── lib/             # Utility functions
+├── next-lite.config.js  # Next-Lite configuration
 └── package.json
 ```
 
-## Development Commands 🛠️
+## CLI Commands
 
 ```bash
-# Start development server with HMR
-npm run dev
+# Development
+npm run dev              # Start development server with HMR
+npm run dev -- --devtools  # Start with DevTools enabled
 
-# Build for production (client-side rendering)
-npm run build
+# Building
+npm run build            # Build for production (CSR)
+npm run build -- --ssr     # Build with server-side rendering
+npm run build -- --static  # Build as static site
+npm run build -- --analyze # Analyze bundle size
 
-# Build with server-side rendering
-npm run build -- --ssr
+# Production
+npm start                # Start production server
+npm start -- --ssr         # Start with SSR enabled
 
-# Build as static site
-npm run build -- --static
-
-# Start production server
-npm start
-
-# Start with SSR enabled
-npm start -- --ssr
-
-# Clean build files
-npm run clean
+# Testing
+npm run lint             # Run linter
+npm test                 # Run tests
 ```
 
-## Performance Comparison 📊
+## Performance Comparison
 
 | Feature              | Next-Lite | Next.js |
 |---------------------|-----------|---------|
@@ -106,26 +125,45 @@ npm run clean
 | CSS Modules         | ✅        | ✅      |
 | TypeScript Support  | ✅        | ✅      |
 
-## Contributing 🤝
+## Ecosystem
 
-We welcome contributions! Whether it's:
-- 🐛 Bug fixes
-- ✨ New features
-- 📚 Documentation improvements
-- 🎨 UI/UX enhancements
+| Package | Description |
+|---------|-------------|
+| [next-lite-framework](https://www.npmjs.com/package/next-lite-framework) | Core framework package |
+| [create-next-lite-app](https://www.npmjs.com/package/create-next-lite-app) | Create Next-Lite apps with one command |
+| [next-lite-plugin-seo](https://github.com/teckcode/next-lite/tree/main/plugins/seo-plugin.js) | SEO optimization plugin |
+| [next-lite-plugin-pwa](https://github.com/teckcode/next-lite/tree/main/plugins/pwa-plugin.js) | Progressive Web App support |
+| [next-lite-plugin-auth](https://github.com/teckcode/next-lite/tree/main/plugins/auth-plugin.js) | Authentication plugin |
 
-Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+## Examples
 
-## License 📄
+Explore our [examples directory](https://github.com/teckcode/next-lite/tree/main/examples) to see Next-Lite in action:
 
-MIT © [Teck] - See [LICENSE](LICENSE) for more details.
+- [Basic App](https://github.com/teckcode/next-lite/tree/main/examples/basic)
+- [Blog Template](https://github.com/teckcode/next-lite/tree/main/examples/blog)
+- [Dashboard Template](https://github.com/teckcode/next-lite/tree/main/examples/dashboard)
+- [Data Fetching](https://github.com/teckcode/next-lite/tree/main/examples/data-fetching)
+- [Plugins](https://github.com/teckcode/next-lite/tree/main/examples/plugins)
+- [Tailwind CSS Integration](https://github.com/teckcode/next-lite/tree/main/examples/tailwind)
+- [Redux Integration](https://github.com/teckcode/next-lite/tree/main/examples/redux)
+- [GraphQL Integration](https://github.com/teckcode/next-lite/tree/main/examples/graphql)
 
-## Support 💬
+## Contributing
 
-- 📖 [Documentation](https://github.com/teckcode/next-lite/wiki)
-- 🐛 [Issue Tracker](https://github.com/teckcode/next-lite/issues)
-- 💡 [Discussions](https://github.com/teckcode/next-lite/discussions)
+We welcome contributions to Next-Lite! Please see our [contributing guidelines](CONTRIBUTING.md) for more details.
+
+## Authors
+
+- **Teck Mill** ([@teckmill](https://github.com/teckmill))
+
+## License
+
+Next-Lite is [MIT licensed](LICENSE).
 
 ---
 
-<p align="center">Built with ❤️ by the Next-Lite Team</p>
+<p align="center">
+  <a href="https://github.com/teckcode/next-lite/stargazers">
+    <img src="https://img.shields.io/github/stars/teckcode/next-lite?style=social" alt="Stars">
+  </a>
+</p>
