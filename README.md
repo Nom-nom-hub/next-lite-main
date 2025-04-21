@@ -19,11 +19,11 @@
 
 ## Getting Started
 
-Visit [next-lite.dev](https://github.com/Nom-nom-hub/next-lite-main) to get started with Next-Lite.
+Visit the [Next-Lite GitHub repository](https://github.com/Nom-nom-hub/next-lite-main) to get started with Next-Lite.
 
 ## Documentation
 
-Visit [next-lite.dev/docs](https://github.com/Nom-nom-hub/next-lite-main/tree/main/docs) to view the full documentation.
+Visit the [Next-Lite documentation](https://github.com/Nom-nom-hub/next-lite-main/tree/main/docs) to view the full documentation.
 
 ## Next-Lite: The React Framework for Performance
 
