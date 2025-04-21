@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/teckcode/next-lite">
-    <img src="https://raw.githubusercontent.com/teckcode/next-lite/main/public/next-lite-logo.png" height="128">
+  <a href="https://github.com/Nom-nom-hub/next-lite-main">
+    <img src="https://raw.githubusercontent.com/Nom-nom-hub/next-lite-main/main/public/next-lite-logo.svg" height="128">
     <h1 align="center">Next-Lite</h1>
   </a>
 </p>
@@ -9,21 +9,21 @@
   <a aria-label="NPM version" href="https://www.npmjs.com/package/next-lite-framework">
     <img alt="" src="https://img.shields.io/npm/v/next-lite-framework.svg?style=for-the-badge&labelColor=000000">
   </a>
-  <a aria-label="License" href="https://github.com/teckcode/next-lite/blob/main/LICENSE">
+  <a aria-label="License" href="https://github.com/Nom-nom-hub/next-lite-main/blob/main/LICENSE">
     <img alt="" src="https://img.shields.io/npm/l/next-lite-framework.svg?style=for-the-badge&labelColor=000000">
   </a>
-  <a aria-label="Join the community on GitHub" href="https://github.com/teckcode/next-lite/discussions">
+  <a aria-label="Join the community on GitHub" href="https://github.com/Nom-nom-hub/next-lite-main/discussions">
     <img alt="" src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&logo=github&labelColor=000000&logoWidth=20">
   </a>
 </p>
 
 ## Getting Started
 
-Visit [next-lite.dev](https://github.com/teckcode/next-lite) to get started with Next-Lite.
+Visit [next-lite.dev](https://github.com/Nom-nom-hub/next-lite-main) to get started with Next-Lite.
 
 ## Documentation
 
-Visit [next-lite.dev/docs](https://github.com/teckcode/next-lite/tree/main/docs) to view the full documentation.
+Visit [next-lite.dev/docs](https://github.com/Nom-nom-hub/next-lite-main/tree/main/docs) to view the full documentation.
 
 ## Next-Lite: The React Framework for Performance
 
@@ -63,16 +63,16 @@ Visit [http://localhost:3000](http://localhost:3000) to see your app in action.
 
 To learn more about Next-Lite, take a look at the following resources:
 
-- [Next-Lite Documentation](https://github.com/teckcode/next-lite/tree/main/docs) - learn about Next-Lite features and API.
-- [Learn Next-Lite](https://github.com/teckcode/next-lite/tree/main/examples) - an interactive Next-Lite tutorial.
+- [Next-Lite Documentation](https://github.com/Nom-nom-hub/next-lite-main/tree/main/docs) - learn about Next-Lite features and API.
+- [Learn Next-Lite](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples) - an interactive Next-Lite tutorial.
 
-You can check out [the Next-Lite GitHub repository](https://github.com/teckcode/next-lite) - your feedback and contributions are welcome!
+You can check out [the Next-Lite GitHub repository](https://github.com/Nom-nom-hub/next-lite-main) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
 The easiest way to deploy your Next-Lite app is to use the [Vercel Platform](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-lite) from the creators of Next.js.
 
-Check out our [Next-Lite deployment documentation](https://github.com/teckcode/next-lite/tree/main/docs/deployment.md) for more details.
+Check out our [Next-Lite deployment documentation](https://github.com/Nom-nom-hub/next-lite-main/tree/main/docs/deployment.md) for more details.
 
 ## Project Structure
 
@@ -131,22 +131,22 @@ npm test                 # Run tests
 |---------|-------------|
 | [next-lite-framework](https://www.npmjs.com/package/next-lite-framework) | Core framework package |
 | [create-next-lite-app](https://www.npmjs.com/package/create-next-lite-app) | Create Next-Lite apps with one command |
-| [next-lite-plugin-seo](https://github.com/teckcode/next-lite/tree/main/plugins/seo-plugin.js) | SEO optimization plugin |
-| [next-lite-plugin-pwa](https://github.com/teckcode/next-lite/tree/main/plugins/pwa-plugin.js) | Progressive Web App support |
-| [next-lite-plugin-auth](https://github.com/teckcode/next-lite/tree/main/plugins/auth-plugin.js) | Authentication plugin |
+| [next-lite-plugin-seo](https://github.com/Nom-nom-hub/next-lite-main/tree/main/plugins/seo-plugin.js) | SEO optimization plugin |
+| [next-lite-plugin-pwa](https://github.com/Nom-nom-hub/next-lite-main/tree/main/plugins/pwa-plugin.js) | Progressive Web App support |
+| [next-lite-plugin-auth](https://github.com/Nom-nom-hub/next-lite-main/tree/main/plugins/auth-plugin.js) | Authentication plugin |
 
 ## Examples
 
-Explore our [examples directory](https://github.com/teckcode/next-lite/tree/main/examples) to see Next-Lite in action:
+Explore our [examples directory](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples) to see Next-Lite in action:
 
-- [Basic App](https://github.com/teckcode/next-lite/tree/main/examples/basic)
-- [Blog Template](https://github.com/teckcode/next-lite/tree/main/examples/blog)
-- [Dashboard Template](https://github.com/teckcode/next-lite/tree/main/examples/dashboard)
-- [Data Fetching](https://github.com/teckcode/next-lite/tree/main/examples/data-fetching)
-- [Plugins](https://github.com/teckcode/next-lite/tree/main/examples/plugins)
-- [Tailwind CSS Integration](https://github.com/teckcode/next-lite/tree/main/examples/tailwind)
-- [Redux Integration](https://github.com/teckcode/next-lite/tree/main/examples/redux)
-- [GraphQL Integration](https://github.com/teckcode/next-lite/tree/main/examples/graphql)
+- [Basic App](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/basic)
+- [Blog Template](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/blog)
+- [Dashboard Template](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/dashboard)
+- [Data Fetching](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/data-fetching)
+- [Plugins](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/plugins)
+- [Tailwind CSS Integration](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/tailwind)
+- [Redux Integration](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/redux)
+- [GraphQL Integration](https://github.com/Nom-nom-hub/next-lite-main/tree/main/examples/graphql)
 
 ## Contributing
 
@@ -163,7 +163,7 @@ Next-Lite is [MIT licensed](LICENSE).
 ---
 
 <p align="center">
-  <a href="https://github.com/teckcode/next-lite/stargazers">
-    <img src="https://img.shields.io/github/stars/teckcode/next-lite?style=social" alt="Stars">
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/stargazers">
+    <img src="https://img.shields.io/github/stars/Nom-nom-hub/next-lite-main?style=social" alt="Stars">
   </a>
 </p>
