@@ -103,7 +103,11 @@ async function build(options = {}) {
     await esbuild.build({
       entryPoints: ['example/client.tsx'],
       bundle: true,
-      outfile: path.join(outDir, 'static', 'client.js'),
+      // Use outdir instead of outfile when code splitting is enabled
+      ...(splitting
+        ? { outdir: path.join(outDir, 'static') }
+        : { outfile: path.join(outDir, 'static', 'client.js') }
+      ),
       format: 'esm',
       platform: 'browser',
       target,
