@@ -1,0 +1,46 @@
+{
+  "name": "create-next-lite-app",
+  "version": "0.1.0",
+  "description": "Create Next-Lite apps with one command",
+  "main": "index.js",
+  "bin": {
+    "create-next-lite-app": "./bin/create-next-lite-app.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "templates"
+  ],
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "next-lite",
+    "react",
+    "framework",
+    "create",
+    "scaffold",
+    "template"
+  ],
+  "author": "Teck",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "9.4.1",
+    "fs-extra": "11.1.1",
+    "inquirer": "8.2.5",
+    "ora": "5.4.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nom-nom-hub/next-lite-main.git",
+    "directory": "packages/create-next-lite-app"
+  },
+  "bugs": {
+    "url": "https://github.com/Nom-nom-hub/next-lite-main/issues"
+  },
+  "homepage": "https://github.com/Nom-nom-hub/next-lite-main#readme"
+}

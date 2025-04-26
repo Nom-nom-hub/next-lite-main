@@ -60,6 +60,19 @@ cd my-app
 npm run dev
 ```
 
+You can also use the interactive mode by running `npx create-next-lite-app` without arguments, or specify options:
+
+```bash
+# Create a TypeScript project
+npx create-next-lite-app my-app --typescript
+
+# Use flash-install for faster dependency installation
+npx create-next-lite-app my-app --use-flash
+
+# Create from an example
+npx create-next-lite-app my-app --example with-tailwind
+```
+
 Visit http://localhost:3000 to see your app in action!
 
 ## Supercharged Installation with flash-install ⚡️
@@ -142,17 +155,17 @@ We welcome contributions! Whether it's:
 - 📚 Documentation improvements
 - 🎨 UI/UX enhancements
 
-Please read our [Contributing Guide](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Please read our [Contributing Guide](https://github.com/Nom-nom-hub/next-lite-main/blob/main/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License 📄
 
-MIT © [Teck] - See [LICENSE](LICENSE) for more details.
+MIT © [Teck] - See [LICENSE](https://github.com/Nom-nom-hub/next-lite-main/blob/main/LICENSE) for more details.
 
 ## Support 💬
 
-- 📖 [Documentation](https://github.com/teckcode/next-lite/wiki)
-- 🐛 [Issue Tracker](https://github.com/teckcode/next-lite/issues)
-- 💡 [Discussions](https://github.com/teckcode/next-lite/discussions)
+- 📖 [Documentation](https://github.com/Nom-nom-hub/next-lite-main/wiki)
+- 🐛 [Issue Tracker](https://github.com/Nom-nom-hub/next-lite-main/issues)
+- 💡 [Discussions](https://github.com/Nom-nom-hub/next-lite-main/discussions)
 
 ---
 
