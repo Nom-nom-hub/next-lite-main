@@ -88,7 +88,7 @@ async function createApp(options) {
       lint: 'eslint .'
     },
     dependencies: {
-      'next-lite-framework': '^0.4.0',
+      'next-lite-framework': '^0.5.0',
       'react': '^18.2.0',
       'react-dom': '^18.2.0'
     },
