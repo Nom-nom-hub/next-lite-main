@@ -17,7 +17,7 @@ async function build() {
       format: 'cjs',
       platform: 'node',
       target: 'node14',
-      external: ['react', 'react-dom', 'canvas', 'esbuild', 'fs-extra', 'ws'],
+      external: ['react', 'react-dom', 'canvas', 'esbuild', 'fs-extra', 'ws', 'dotenv'],
       plugins: [cssModulesPlugin()],
       minify: true,
       sourcemap: true,
@@ -29,7 +29,9 @@ async function build() {
       dir: process.cwd(),
       outdir: 'dist/client',
       minify: true,
-      sourcemap: true
+      sourcemap: true,
+      splitting: true,
+      chunkNames: 'chunks/[name]-[hash]'
     });
 
     // Build the legacy framework components

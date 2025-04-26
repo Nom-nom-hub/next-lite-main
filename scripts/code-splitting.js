@@ -37,7 +37,7 @@ async function buildWithCodeSplitting({ dir, outdir, minify = true, sourcemap = 
       sourcemap,
       format: 'esm',
       splitting: true,
-      chunkNames: 'chunks/[name]-[hash]',
+      chunkNames: chunkNames || 'chunks/[name]-[hash]',
       target: ['es2018'],
       define: {
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')

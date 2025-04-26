@@ -53,10 +53,10 @@ This document outlines the development roadmap for the Next-Lite framework and i
 ### Performance
 - [x] Minimal bundle size
 - [x] Fast build times
-- [ ] Automatic code splitting
+- [x] Automatic code splitting
 - [x] Image optimization
-- [ ] Font optimization
-- [ ] Script optimization
+- [x] Font optimization
+- [x] Script optimization
 - [ ] Performance monitoring tools
 
 ## Tooling
@@ -199,14 +199,14 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### v1.0.0
 - [ ] Complete core feature set
-  - [ ] Static Site Generation (SSG)
-  - [ ] Incremental Static Regeneration (ISR)
-  - [ ] Automatic code splitting
-  - [ ] Font optimization
-  - [ ] Script optimization
-  - [ ] Middleware support
+  - [x] Static Site Generation (SSG)
+  - [x] Incremental Static Regeneration (ISR)
+  - [x] Automatic code splitting
+  - [x] Font optimization
+  - [x] Script optimization
+  - [x] Middleware support
   - [ ] Internationalization (i18n)
-  - [ ] Environment variables handling
+  - [x] Environment variables handling
   - [ ] Plugin system
 - [ ] Comprehensive test coverage
   - [x] Unit tests for core components
