@@ -194,7 +194,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Implement SSR
 - [x] Add image optimization
 - [x] Create documentation website
-- [ ] Improve developer experience
+- [x] Improve developer experience
 
 ### v1.0.0
 - [ ] Complete core feature set
