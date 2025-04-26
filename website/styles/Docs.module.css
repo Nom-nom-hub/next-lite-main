@@ -1,0 +1,67 @@
+.docsContainer {
+  display: flex;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+}
+
+.content {
+  flex: 1;
+  padding: 0 2rem;
+  max-width: 800px;
+}
+
+.docHeader {
+  margin-bottom: 2rem;
+}
+
+.docTitle {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.docDescription {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eaeaea;
+}
+
+.paginationLink {
+  display: flex;
+  align-items: center;
+}
+
+.paginationLink.prev {
+  margin-right: auto;
+}
+
+.paginationLink.next {
+  margin-left: auto;
+}
+
+.paginationLabel {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.paginationTitle {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .docsContainer {
+    flex-direction: column;
+  }
+  
+  .content {
+    padding: 0;
+  }
+}

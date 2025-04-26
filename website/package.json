@@ -1,0 +1,17 @@
+{
+  "name": "next-lite-docs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next-lite dev",
+    "build": "next-lite build",
+    "start": "next-lite start"
+  },
+  "dependencies": {
+    "next-lite-framework": "file:../",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "marked": "^4.3.0"
+  }
+}
