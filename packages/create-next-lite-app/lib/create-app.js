@@ -12,27 +12,27 @@ const { execSync } = require('child_process');
  */
 async function createApp(options) {
   const { projectName, typescript, packageManager, template, example, skipInstall } = options;
-  
+
   // Validate project name
   const root = path.resolve(projectName);
   const appName = path.basename(root);
-  
+
   validateProjectName(appName);
-  
+
   // Create project directory if it doesn't exist
   if (fs.existsSync(root)) {
     const existing = fs.readdirSync(root);
     if (existing.length > 0) {
       console.log();
       console.log(`The directory ${chalk.green(appName)} already exists and is not empty.`);
-      
+
       const { proceed } = await inquirer.prompt({
         type: 'confirm',
         name: 'proceed',
         message: 'Do you want to continue and potentially overwrite files?',
         default: false,
       });
-      
+
       if (!proceed) {
         process.exit(1);
       }
@@ -40,14 +40,14 @@ async function createApp(options) {
   } else {
     fs.mkdirSync(root, { recursive: true });
   }
-  
+
   console.log();
   console.log(`Creating a new Next-Lite app in ${chalk.green(root)}.`);
   console.log();
-  
+
   // Determine the template source
   let templatePath;
-  
+
   if (example) {
     // Use an example from the Next-Lite repository
     console.log(`Using example: ${chalk.cyan(example)}`);
@@ -57,7 +57,7 @@ async function createApp(options) {
     const templateToUse = typescript ? `${template}-ts` : template;
     console.log(`Using template: ${chalk.cyan(templateToUse)}`);
     templatePath = path.resolve(__dirname, '../templates', templateToUse);
-    
+
     if (!fs.existsSync(templatePath)) {
       console.log();
       console.log(`Template ${chalk.red(templateToUse)} not found.`);
@@ -65,7 +65,7 @@ async function createApp(options) {
       templatePath = path.resolve(__dirname, '../templates/default');
     }
   }
-  
+
   // Copy template files to project directory
   const spinner = ora('Copying template files').start();
   try {
@@ -75,7 +75,7 @@ async function createApp(options) {
     spinner.fail('Failed to copy template files');
     throw error;
   }
-  
+
   // Create package.json
   const packageJson = {
     name: appName,
@@ -100,13 +100,13 @@ async function createApp(options) {
       'eslint-config-next': '^13.4.2'
     }
   };
-  
+
   // Write package.json
   fs.writeFileSync(
     path.join(root, 'package.json'),
-    JSON.stringify(packageJson, null, 2) + '\\n'
+    JSON.stringify(packageJson, null, 2)
   );
-  
+
   // Create tsconfig.json if using TypeScript
   if (typescript) {
     const tsConfig = {
@@ -129,20 +129,20 @@ async function createApp(options) {
       include: ['next-env.d.ts', '**/*.ts', '**/*.tsx'],
       exclude: ['node_modules']
     };
-    
+
     fs.writeFileSync(
       path.join(root, 'tsconfig.json'),
-      JSON.stringify(tsConfig, null, 2) + '\\n'
+      JSON.stringify(tsConfig, null, 2)
     );
   }
-  
+
   // Install dependencies
   if (!skipInstall) {
     console.log();
     console.log('Installing dependencies:');
-    
+
     const installSpinner = ora('Installing packages. This might take a few minutes.').start();
-    
+
     try {
       const command = getInstallCommand(packageManager);
       execSync(command, { cwd: root, stdio: 'ignore' });
@@ -156,7 +156,7 @@ async function createApp(options) {
       console.log(`  ${getInstallCommand(packageManager)}`);
     }
   }
-  
+
   // Display success message
   console.log();
   console.log(`${chalk.green('Success!')} Created ${chalk.cyan(appName)} at ${chalk.cyan(root)}`);
@@ -191,7 +191,7 @@ function validateProjectName(name) {
     );
     process.exit(1);
   }
-  
+
   if (name === 'next-lite' || name === 'next-lite-framework') {
     console.log();
     console.error(
@@ -206,18 +206,18 @@ function validateProjectName(name) {
  */
 async function fetchExampleFromRepo(example) {
   const tempDir = path.join(process.cwd(), '.next-lite-temp');
-  
+
   // Clean up temp directory if it exists
   if (fs.existsSync(tempDir)) {
     fs.removeSync(tempDir);
   }
-  
+
   // Create temp directory
   fs.mkdirSync(tempDir, { recursive: true });
-  
+
   // Clone the example
   const spinner = ora('Downloading example').start();
-  
+
   try {
     execSync(
       `npx degit Nom-nom-hub/next-lite-main/examples/${example} ${tempDir}`,
