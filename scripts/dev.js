@@ -8,7 +8,7 @@ const APIRouter = require('./api-router');
 const { generateRouterCode } = require('./route-loader');
 
 // Create WebSocket server for HMR
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 8081 });
 
 // Initialize API Router
 const apiRouter = new APIRouter(path.join(process.cwd(), 'example', 'pages', 'api'));
@@ -31,7 +31,7 @@ function generateClientEntry() {
   const pagesDir = path.join(process.cwd(), 'example', 'pages');
   const routerCode = generateRouterCode(pagesDir);
   const clientPath = path.join(process.cwd(), '.next', 'client-entry.tsx');
-  
+
   fs.writeFileSync(clientPath, routerCode);
   console.log('[Build] Client entry generated at:', clientPath);
   return clientPath;
@@ -42,7 +42,7 @@ async function watchFiles() {
   const watcher = fs.watch('example', { recursive: true }, async (eventType, filename) => {
     if (filename) {
       console.log(`[HMR] File changed: ${filename}`);
-      
+
       // Reload API routes if an API file changed
       if (filename.startsWith('pages/api/')) {
         console.log('[HMR] Reloading API routes...');
@@ -71,7 +71,7 @@ async function watchFiles() {
         // Notify clients to reload
         wss.clients.forEach(client => {
           if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ 
+            client.send(JSON.stringify({
               type: 'reload',
               file: filename
             }));
@@ -81,7 +81,7 @@ async function watchFiles() {
         console.error('[HMR] Build failed:', error);
         wss.clients.forEach(client => {
           if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({ 
+            client.send(JSON.stringify({
               type: 'error',
               error: error.message
             }));
@@ -115,7 +115,7 @@ async function startDevServer() {
         console.log(`[Server] Serving file from .next: ${url.pathname}`);
         const filePath = path.join(process.cwd(), url.pathname);
         console.log('[Server] Full path:', filePath);
-        
+
         // Check if file exists
         if (!fs.existsSync(filePath)) {
           console.error('[Server] File not found:', filePath);
@@ -135,7 +135,7 @@ async function startDevServer() {
         }[ext] || 'text/plain';
 
         const content = await fs.promises.readFile(filePath);
-        res.writeHead(200, { 
+        res.writeHead(200, {
           'Content-Type': contentType,
           'Cache-Control': 'no-cache',
           'Access-Control-Allow-Origin': '*'
@@ -154,13 +154,13 @@ async function startDevServer() {
       console.log('[Server] Serving index.html');
       const indexPath = path.join(process.cwd(), 'example', 'index.html');
       let content = await fs.promises.readFile(indexPath, 'utf8');
-      
+
       // Inject HMR client code
       const hmrClient = `
         <script>
-          const ws = new WebSocket('ws://localhost:8080');
+          const ws = new WebSocket('ws://localhost:8081');
           let loadingOverlay;
-          
+
           // Create loading overlay
           function createLoadingOverlay() {
             const overlay = document.createElement('div');
@@ -179,10 +179,10 @@ async function startDevServer() {
               visibility: hidden;
               transition: opacity 0.2s ease, visibility 0.2s ease;
             \`;
-            
+
             const content = document.createElement('div');
             content.style.textAlign = 'center';
-            
+
             const spinner = document.createElement('div');
             spinner.style.cssText = \`
               width: 50px;
@@ -193,7 +193,7 @@ async function startDevServer() {
               animation: spin 1s ease-in-out infinite;
               margin: 0 auto;
             \`;
-            
+
             const message = document.createElement('div');
             message.style.cssText = \`
               color: white;
@@ -205,20 +205,20 @@ async function startDevServer() {
               -webkit-text-fill-color: transparent;
             \`;
             message.textContent = 'Reloading...';
-            
+
             const style = document.createElement('style');
             style.textContent = \`
               @keyframes spin {
                 to { transform: rotate(360deg); }
               }
             \`;
-            
+
             content.appendChild(spinner);
             content.appendChild(message);
             overlay.appendChild(content);
             document.head.appendChild(style);
             document.body.appendChild(overlay);
-            
+
             return {
               show: () => {
                 overlay.style.opacity = '1';
@@ -233,20 +233,20 @@ async function startDevServer() {
               }
             };
           }
-          
+
           ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             console.log('[HMR] Received:', data);
-            
+
             if (!loadingOverlay) {
               loadingOverlay = createLoadingOverlay();
             }
-            
+
             if (data.type === 'reload') {
               console.log('[HMR] Reloading due to change in:', data.file);
               loadingOverlay.setMessage('Reloading...');
               loadingOverlay.show();
-              
+
               // Add a small delay before reloading to show the overlay
               setTimeout(() => {
                 window.location.reload();
@@ -258,24 +258,24 @@ async function startDevServer() {
               setTimeout(() => loadingOverlay.hide(), 2000);
             }
           };
-          
+
           ws.onopen = () => console.log('[HMR] Connected to dev server');
           ws.onclose = () => console.log('[HMR] Disconnected from dev server');
           ws.onerror = (error) => console.error('[HMR] WebSocket error:', error);
-          
+
           // Log navigation events
           window.addEventListener('popstate', () => {
             console.log('[Router] Navigation:', window.location.pathname);
           });
-          
+
           window.addEventListener('pushstate', () => {
             console.log('[Router] Navigation:', window.location.pathname);
           });
         </script>
       `;
       content = content.replace('</body>', `${hmrClient}</body>`);
-      
-      res.writeHead(200, { 
+
+      res.writeHead(200, {
         'Content-Type': 'text/html',
         'Cache-Control': 'no-cache',
         'Access-Control-Allow-Origin': '*'
@@ -304,12 +304,12 @@ async function startDevServer() {
       target: 'es2015',
       jsx: 'automatic',
       jsxImportSource: 'react',
-      loader: { 
-        '.tsx': 'tsx', 
+      loader: {
+        '.tsx': 'tsx',
         '.ts': 'ts',
         '.css': 'css'
       },
-      define: { 
+      define: {
         'process.env.NODE_ENV': '"development"'
       },
       plugins: [
@@ -332,7 +332,7 @@ async function startDevServer() {
     server.listen(3000, () => {
       console.log('\n🚀 Dev server running at:');
       console.log('   > Local:    http://localhost:3000');
-      console.log('   > HMR:      ws://localhost:8080\n');
+      console.log('   > HMR:      ws://localhost:8081\n');
     });
   } catch (error) {
     console.error('[Build] Error starting esbuild:', error);

@@ -5,6 +5,8 @@ node_modules/
 
 # Testing
 coverage/
+my-app/
+my-website/
 
 # Build
 .next/
@@ -30,3 +32,4 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+._*

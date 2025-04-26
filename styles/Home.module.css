@@ -1,0 +1,238 @@
+/* Make sure this file is loaded as a CSS module */
+.container {
+  min-height: 100vh;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #7928CA;
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: #7928CA;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.highlight {
+  color: #7928CA;
+}
+
+.description {
+  line-height: 1.5;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 1rem 0 2rem;
+}
+
+.counter {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  text-align: center;
+}
+
+.counter h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.counter p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #7928CA;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button {
+  background-color: #7928CA;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #6516a3;
+}
+
+.features {
+  margin-top: 2rem;
+}
+
+.features h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1.5rem;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  border-color: #7928CA;
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #7928CA;
+}
+
+.footer {
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  text-align: center;
+  color: #666;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.textContent {
+  line-height: 1.6;
+}
+
+.textContent h2 {
+  margin-top: 2rem;
+  color: #7928CA;
+}
+
+.list {
+  padding-left: 1.5rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+.contactForm {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #7928CA;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.successMessage h2 {
+  color: #7928CA;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

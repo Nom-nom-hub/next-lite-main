@@ -3,11 +3,11 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from '../example/router';
 
-import IndexPage from '../example/pages/index';
 import AboutPage from '../example/pages/about';
 import DocsPage from '../example/pages/docs';
-import TodosPage from '../example/pages/todos';
 import FeaturesPage from '../example/pages/features';
+import IndexPage from '../example/pages/index';
+import TodosPage from '../example/pages/todos';
 
 // Get the root element
 const rootElement = document.getElementById('root');
@@ -18,11 +18,11 @@ const root = createRoot(rootElement);
 
 // Auto-generated routes
 const routes = {
-  '/': () => <IndexPage />,
   '/about': () => <AboutPage />,
   '/docs': () => <DocsPage />,
-  '/todos': () => <TodosPage />,
-  '/features': () => <FeaturesPage />
+  '/features': () => <FeaturesPage />,
+  '/': () => <IndexPage />,
+  '/todos': () => <TodosPage />
 };
 
 // Render the app
