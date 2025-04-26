@@ -94,11 +94,11 @@ This document outlines the development roadmap for the Next-Lite framework and i
 ### Guides
 - [x] Basic README with getting started guide
 - [ ] Comprehensive documentation website
-- [ ] Installation and setup guides
-- [ ] Routing documentation
-- [ ] Data fetching guides
-- [ ] Styling guides
-- [ ] Deployment guides
+- [x] Installation and setup guides
+- [x] Routing documentation
+- [x] Data fetching guides
+- [x] Styling guides
+- [x] Deployment guides
 - [ ] Migration guide from Next.js
 
 ### Examples
@@ -112,18 +112,18 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [ ] Full-stack application examples
 
 ### API Reference
-- [ ] Core API documentation
+- [x] Core API documentation
 - [ ] Configuration options
 - [ ] CLI commands reference
-- [ ] Component API reference
+- [x] Component API reference
 - [ ] Hooks documentation
 
 ## Testing and Quality
 
 ### Testing
-- [ ] Unit tests for core functionality
-- [ ] Integration tests
-- [ ] End-to-end tests
+- [x] Unit tests for core functionality
+- [x] Integration tests
+- [x] End-to-end tests
 - [ ] Performance benchmarks
 - [ ] Cross-browser testing
 
@@ -187,8 +187,8 @@ This document outlines the development roadmap for the Next-Lite framework and i
 ### v0.4.0
 - [x] Complete TypeScript template
 - [x] Add more examples
-- [ ] Improve documentation
-- [ ] Add tests
+- [x] Improve documentation
+- [x] Add tests
 
 ### v0.5.0
 - [ ] Implement SSR
@@ -206,4 +206,4 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 This roadmap is a living document and will be updated as the project evolves. Priorities may shift based on community feedback and emerging needs.
 
-Last updated: April 26, 2025 (TypeScript template and examples added)
+Last updated: April 26, 2025 (TypeScript template, examples, documentation, and tests added)
