@@ -5,6 +5,49 @@ const fs = require('fs-extra');
 const esbuild = require('esbuild');
 
 /**
+ * Get all page files in a directory
+ * @param {string} dir - Directory to search
+ * @param {string} prefix - Prefix for recursive calls
+ * @returns {Promise<Array<string>>} - Paths to page files
+ */
+async function getPageFiles(dir, prefix = '') {
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    
+    const files = [];
+    
+    for (const entry of entries) {
+      const entryPath = path.join(dir, entry.name);
+      
+      if (entry.isDirectory()) {
+        // Skip API routes
+        if (entry.name === 'api') continue;
+        
+        // Recursively get files in subdirectories
+        const subFiles = await getPageFiles(entryPath, path.join(prefix, entry.name));
+        files.push(...subFiles);
+      } else if (
+        entry.name.endsWith('.js') || 
+        entry.name.endsWith('.jsx') || 
+        entry.name.endsWith('.ts') || 
+        entry.name.endsWith('.tsx')
+      ) {
+        // Skip special files
+        if (entry.name.startsWith('_')) continue;
+        
+        // Add page files
+        files.push(path.join(prefix, entry.name));
+      }
+    }
+    
+    return files;
+  } catch (error) {
+    console.error(`Error reading directory ${dir}:`, error);
+    return [];
+  }
+}
+
+/**
  * Build client-side JavaScript with code splitting
  * @param {Object} options - Build options
  * @param {string} options.dir - Root directory
@@ -65,39 +108,6 @@ async function buildWithCodeSplitting({ dir, outdir, minify = true, sourcemap = 
     console.error('❌ Build failed:', error);
     throw error;
   }
-}
-
-/**
- * Get all page files in a directory
- * @param {string} dir - Directory to search
- * @param {string} prefix - Prefix for recursive calls
- * @returns {Promise<Array<string>>} - Paths to page files
- */
-async function getPageFiles(dir, prefix = '') {
-  const entries = await fs.readdir(dir);
-  
-  const files = [];
-  
-  for (const entry of entries) {
-    const entryPath = path.join(dir, entry);
-    const entryStats = await fs.stat(entryPath);
-    
-    if (entryStats.isDirectory()) {
-      // Recursively get files in subdirectories
-      const subFiles = await getPageFiles(entryPath, path.join(prefix, entry));
-      files.push(...subFiles);
-    } else if (entry.endsWith('.js') || entry.endsWith('.jsx') || entry.endsWith('.ts') || entry.endsWith('.tsx')) {
-      // Skip API routes
-      if (prefix.startsWith('api/') || entry.startsWith('api/')) {
-        continue;
-      }
-      
-      // Add page files
-      files.push(path.join(prefix, entry));
-    }
-  }
-  
-  return files;
 }
 
 module.exports = {
