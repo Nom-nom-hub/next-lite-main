@@ -124,6 +124,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Unit tests for core functionality
 - [x] Integration tests
 - [x] End-to-end tests
+- [x] Test configuration and setup
 - [ ] Performance benchmarks
 - [ ] Cross-browser testing
 
@@ -194,16 +195,45 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Implement SSR
 - [x] Add image optimization
 - [x] Create documentation website
-- [x] Improve developer experience
+- [x] Improve developer experience (test configuration and setup)
 
 ### v1.0.0
 - [ ] Complete core feature set
+  - [ ] Static Site Generation (SSG)
+  - [ ] Incremental Static Regeneration (ISR)
+  - [ ] Automatic code splitting
+  - [ ] Font optimization
+  - [ ] Script optimization
+  - [ ] Middleware support
+  - [ ] Internationalization (i18n)
+  - [ ] Environment variables handling
+  - [ ] Plugin system
 - [ ] Comprehensive test coverage
+  - [x] Unit tests for core components
+  - [x] Integration tests for key features
+  - [x] End-to-end tests for common workflows
+  - [ ] Performance benchmarks
+  - [ ] Cross-browser testing
+  - [ ] Stress testing for production scenarios
 - [ ] Full documentation
+  - [ ] Complete API reference
+  - [ ] Configuration options documentation
+  - [ ] CLI commands reference
+  - [ ] Hooks documentation
+  - [ ] Migration guide from Next.js
+  - [ ] Advanced usage patterns
+  - [ ] Troubleshooting guides
 - [ ] Production-ready stability
+  - [ ] Error handling and recovery
+  - [ ] Performance optimization
+  - [ ] Security hardening
+  - [ ] Accessibility compliance
+  - [ ] Compatibility with popular tools and libraries
+  - [ ] CI/CD pipeline improvements
+  - [ ] Monitoring and debugging tools
 
 ---
 
 This roadmap is a living document and will be updated as the project evolves. Priorities may shift based on community feedback and emerging needs.
 
-Last updated: April 26, 2025 (SSR, image optimization, and documentation website added)
+Last updated: April 26, 2025 (Test configuration fixed, all tests passing, v1.0.0 roadmap detailed)
