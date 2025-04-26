@@ -16,14 +16,14 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Implement development server
 - [x] Add production build process
 - [x] Integrate with esbuild for faster builds
-- [ ] Add comprehensive error handling
+- [x] Add comprehensive error handling
 - [ ] Implement hot module replacement (HMR)
 
 ### Routing
 - [x] Implement file-based routing
 - [x] Support for dynamic routes
 - [x] API routes
-- [ ] Add middleware support
+- [x] Add middleware support
 - [ ] Implement catch-all routes
 - [ ] Add route groups
 - [ ] Support for internationalized routing
@@ -37,7 +37,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### Data Fetching
 - [x] Basic data fetching
-- [ ] Implement data fetching utilities
+- [x] Implement data fetching utilities
 - [ ] Add caching mechanisms
 - [ ] Support for SWR or React Query integration
 - [ ] Implement optimistic updates
@@ -67,7 +67,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Add TypeScript support
 - [x] Support for different package managers (npm, yarn, pnpm)
 - [x] Add flash-install integration for faster installations
-- [ ] Add interactive project creation
+- [x] Add interactive project creation
 - [ ] Implement project upgrading
 - [ ] Add plugin system
 
@@ -113,7 +113,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### API Reference
 - [x] Core API documentation
-- [ ] Configuration options
+- [x] Configuration options
 - [ ] CLI commands reference
 - [x] Component API reference
 - [ ] Hooks documentation
