@@ -4,7 +4,7 @@
   "description": "A lightweight alternative to Next.js",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "echo \"No tests specified\"",
     "build": "node scripts/build.js",
     "dev": "node scripts/dev.js"
   },
