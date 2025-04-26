@@ -9,13 +9,34 @@ jest.mock('next-lite-framework/router', () => ({
   useRouter: jest.fn()
 }));
 
+// Mock the Link component to directly call the router.push method
+jest.mock('next-lite-framework/link', () => {
+  return {
+    __esModule: true,
+    default: ({ href, children, replace, ...props }) => {
+      const router = require('next-lite-framework/router').useRouter();
+      const handleClick = (e) => {
+        e.preventDefault();
+        if (replace) {
+          router.replace(href);
+        } else {
+          router.push(href);
+        }
+        if (props.onClick) {
+          props.onClick(e);
+        }
+      };
+      return <a href={href} onClick={handleClick} {...props}>{children}</a>;
+    }
+  };
+});
+
 // Create a simple test application
 const TestApp = () => {
   const [page, setPage] = React.useState('home');
-  const router = useRouter();
-  
-  // Mock the router implementation
-  (useRouter as jest.Mock).mockImplementation(() => ({
+
+  // Create a mock router implementation
+  const mockRouter = {
     pathname: `/${page === 'home' ? '' : page}`,
     route: `/${page === 'home' ? '' : page}`,
     query: {},
@@ -36,8 +57,11 @@ const TestApp = () => {
       emit: jest.fn()
     },
     isFallback: false
-  }));
-  
+  };
+
+  // Set the mock implementation for useRouter
+  (useRouter as jest.Mock).mockImplementation(() => mockRouter);
+
   // Render different pages based on the current page state
   const renderPage = () => {
     switch (page) {
@@ -86,7 +110,12 @@ const TestApp = () => {
         return <h1>Page Not Found</h1>;
     }
   };
-  
+
+  // Force a re-render when the page changes
+  React.useEffect(() => {
+    // This is just to trigger a re-render
+  }, [page]);
+
   return (
     <div className="app">
       {renderPage()}
@@ -97,68 +126,68 @@ const TestApp = () => {
 describe('End-to-End App Test', () => {
   it('renders the home page by default', () => {
     render(<TestApp />);
-    
+
     expect(screen.getByText('Welcome to the Home Page')).toBeInTheDocument();
     expect(screen.getByText('About')).toBeInTheDocument();
     expect(screen.getByText('Contact')).toBeInTheDocument();
   });
-  
+
   it('navigates to the about page when the About link is clicked', () => {
     render(<TestApp />);
-    
+
     // Click the About link
     fireEvent.click(screen.getByText('About'));
-    
+
     // Verify that the about page is rendered
     expect(screen.getByText('About Us')).toBeInTheDocument();
     expect(screen.getByText('This is the about page')).toBeInTheDocument();
     expect(screen.getByText('Back to Home')).toBeInTheDocument();
   });
-  
+
   it('navigates to the contact page when the Contact link is clicked', () => {
     render(<TestApp />);
-    
+
     // Click the Contact link
     fireEvent.click(screen.getByText('Contact'));
-    
+
     // Verify that the contact page is rendered
     expect(screen.getByText('Contact Us')).toBeInTheDocument();
     expect(screen.getByLabelText('Name:')).toBeInTheDocument();
     expect(screen.getByLabelText('Email:')).toBeInTheDocument();
     expect(screen.getByText('Submit')).toBeInTheDocument();
   });
-  
+
   it('navigates back to the home page', () => {
     render(<TestApp />);
-    
+
     // Navigate to the about page
     fireEvent.click(screen.getByText('About'));
-    
+
     // Verify that the about page is rendered
     expect(screen.getByText('About Us')).toBeInTheDocument();
-    
+
     // Navigate back to the home page
     fireEvent.click(screen.getByText('Back to Home'));
-    
+
     // Verify that the home page is rendered
     expect(screen.getByText('Welcome to the Home Page')).toBeInTheDocument();
   });
-  
+
   it('allows form interaction on the contact page', () => {
     render(<TestApp />);
-    
+
     // Navigate to the contact page
     fireEvent.click(screen.getByText('Contact'));
-    
+
     // Fill out the form
     fireEvent.change(screen.getByLabelText('Name:'), {
       target: { value: 'John Doe' }
     });
-    
+
     fireEvent.change(screen.getByLabelText('Email:'), {
       target: { value: 'john@example.com' }
     });
-    
+
     // Verify that the form values were updated
     expect(screen.getByLabelText('Name:')).toHaveValue('John Doe');
     expect(screen.getByLabelText('Email:')).toHaveValue('john@example.com');
