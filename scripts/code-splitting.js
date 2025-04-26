@@ -11,9 +11,10 @@ const esbuild = require('esbuild');
  * @param {string} options.outdir - Output directory
  * @param {boolean} options.minify - Whether to minify the output
  * @param {boolean} options.sourcemap - Whether to generate sourcemaps
+ * @param {string} [options.chunkNames] - Custom chunk naming pattern
  * @returns {Promise<void>}
  */
-async function buildWithCodeSplitting({ dir, outdir, minify = true, sourcemap = true }) {
+async function buildWithCodeSplitting({ dir, outdir, minify = true, sourcemap = true, chunkNames }) {
   try {
     // Create the output directory if it doesn't exist
     await fs.ensureDir(outdir);

@@ -57,7 +57,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Image optimization
 - [x] Font optimization
 - [x] Script optimization
-- [ ] Performance monitoring tools
+- [x] Performance monitoring tools
 
 ## Tooling
 
@@ -198,16 +198,16 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Improve developer experience (test configuration and setup)
 
 ### v1.0.0
-- [ ] Complete core feature set
+- [x] Complete core feature set
   - [x] Static Site Generation (SSG)
   - [x] Incremental Static Regeneration (ISR)
   - [x] Automatic code splitting
   - [x] Font optimization
   - [x] Script optimization
   - [x] Middleware support
-  - [ ] Internationalization (i18n)
+  - [x] Internationalization (i18n)
   - [x] Environment variables handling
-  - [ ] Plugin system
+  - [x] Plugin system
 - [ ] Comprehensive test coverage
   - [x] Unit tests for core components
   - [x] Integration tests for key features
@@ -231,6 +231,15 @@ This document outlines the development roadmap for the Next-Lite framework and i
   - [ ] Compatibility with popular tools and libraries
   - [ ] CI/CD pipeline improvements
   - [ ] Monitoring and debugging tools
+
+### v1.1.0 (Future)
+- [ ] Server Components
+- [ ] Streaming SSR
+- [ ] Edge Runtime
+- [ ] Improved DX
+  - [ ] Better error messages
+  - [ ] Dev tools integration
+  - [ ] Hot module replacement enhancements
 
 ---
 
