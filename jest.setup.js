@@ -1,6 +1,9 @@
 // Add custom jest matchers for testing-library
 require('@testing-library/jest-dom');
 
+// Set up global variables for TypeScript
+global.React = require('react');
+
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
