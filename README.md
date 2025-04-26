@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Nom-nom-hub/next-lite-main/main/assets/next-lite-logo.png" alt="Next-Lite Logo" width="300" />
+  <img src="./assets/next-lite-logo.png" alt="Next-Lite Logo" width="300" />
   <h1>Next-Lite</h1>
   <p>A lightweight, high-performance alternative to Next.js</p>
 </div>
