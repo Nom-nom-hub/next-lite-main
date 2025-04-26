@@ -73,7 +73,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### Templates
 - [x] Create default template
-- [ ] Create TypeScript template
+- [x] Create TypeScript template
 - [ ] Add TailwindCSS template
 - [ ] Add styled-components template
 - [ ] Create Redux template
@@ -184,7 +184,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 ## Release Planning
 
 ### v0.4.0
-- [ ] Complete TypeScript template
+- [x] Complete TypeScript template
 - [ ] Add more examples
 - [ ] Improve documentation
 - [ ] Add tests
@@ -205,4 +205,4 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 This roadmap is a living document and will be updated as the project evolves. Priorities may shift based on community feedback and emerging needs.
 
-Last updated: April 26, 2025
+Last updated: April 26, 2025 (TypeScript template added)
