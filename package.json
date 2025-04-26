@@ -1,58 +1,34 @@
 {
-  "name": "next-lite-monorepo",
-  "version": "0.1.0",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "description": "A lightweight, high-performance alternative to Next.js built with esbuild. Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box, all while maintaining a minimal footprint and blazing-fast build times.",
+  "name": "next-lite-framework",
+  "version": "0.2.0",
+  "description": "A lightweight, high-performance alternative to Next.js",
+  "main": "index.js",
   "scripts": {
-    "build": "npm run build --workspaces",
-    "dev": "npm run dev --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
-    "clean": "npm run clean --workspaces --if-present"
+    "test": "jest",
+    "build": "node scripts/build.js",
+    "dev": "node scripts/dev.js"
   },
   "keywords": [
     "react",
     "nextjs",
-    "framework",
-    "typescript",
-    "esbuild",
-    "fast",
-    "lightweight"
+    "framework"
   ],
   "author": "Teck",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/teckmill/next-lite-main"
-  },
-  "bugs": {
-    "url": "https://github.com/teckmill/next-lite-main/issues"
-  },
-  "homepage": "https://github.com/teckmill/next-lite-main#readme",
   "dependencies": {
     "esbuild": "0.17.19",
-    "fs-extra": "^11.2.0",
-    "next-lite-framework": "^0.2.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "ws": "^8.18.0"
+    "fs-extra": "11.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "ws": "8.18.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.4",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "postcss": "^8.4.49",
-    "postcss-modules": "^6.0.1",
-    "typescript": "^5.0.0"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "engines": {
-    "node": ">=14.0.0"
+    "@types/fs-extra": "11.0.4",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "jest": "29.7.0",
+    "postcss": "8.4.49",
+    "postcss-modules": "6.0.1",
+    "typescript": "5.0.4"
   }
 }
