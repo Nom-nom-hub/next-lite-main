@@ -245,4 +245,4 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 This roadmap is a living document and will be updated as the project evolves. Priorities may shift based on community feedback and emerging needs.
 
-Last updated: May 1, 2025 (v1.0.0 released with all planned features completed)
+Last updated: April 26, 2025 (v1.0.0 released with all planned features completed)
