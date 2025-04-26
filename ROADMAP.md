@@ -102,12 +102,13 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [ ] Migration guide from Next.js
 
 ### Examples
-- [ ] Basic examples
+- [x] Basic examples
+- [x] TypeScript examples
 - [ ] Authentication examples
-- [ ] API routes examples
+- [x] API routes examples
 - [ ] Form handling examples
-- [ ] State management examples
-- [ ] Styling examples
+- [x] State management examples
+- [x] Styling examples
 - [ ] Full-stack application examples
 
 ### API Reference
@@ -185,7 +186,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### v0.4.0
 - [x] Complete TypeScript template
-- [ ] Add more examples
+- [x] Add more examples
 - [ ] Improve documentation
 - [ ] Add tests
 
@@ -205,4 +206,4 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 This roadmap is a living document and will be updated as the project evolves. Priorities may shift based on community feedback and emerging needs.
 
-Last updated: April 26, 2025 (TypeScript template added)
+Last updated: April 26, 2025 (TypeScript template and examples added)

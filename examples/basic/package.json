@@ -1,0 +1,15 @@
+{
+  "name": "next-lite-basic-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next-lite dev",
+    "build": "next-lite build",
+    "start": "next-lite start"
+  },
+  "dependencies": {
+    "next-lite-framework": "^0.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

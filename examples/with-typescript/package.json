@@ -1,0 +1,22 @@
+{
+  "name": "next-lite-typescript-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next-lite dev",
+    "build": "next-lite build",
+    "start": "next-lite start",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next-lite-framework": "^0.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "typescript": "^4.9.5"
+  }
+}
