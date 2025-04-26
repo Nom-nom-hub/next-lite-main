@@ -322,24 +322,18 @@ export async function startDevServer(options: DevServerOptions = {}) {
       await build({ dev: true });
       
       // Notify clients to reload
-      wss.clients.forEach(client => {
+      wss.clients.forEach((client: WebSocket) => {
         if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({
-            type: 'reload',
-            file: filename
-          }));
+          client.send(JSON.stringify({ type: 'reload' }));
         }
       });
     } catch (error) {
       console.error('[HMR] Build failed:', error);
       
       // Notify clients of error
-      wss.clients.forEach(client => {
+      wss.clients.forEach((client: WebSocket) => {
         if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({
-            type: 'error',
-            error: error instanceof Error ? error.message : String(error)
-          }));
+          client.send(JSON.stringify({ type: 'error', error: error instanceof Error ? error.message : String(error) }));
         }
       });
     }

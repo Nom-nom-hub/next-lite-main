@@ -86,7 +86,7 @@ jobs:
       if: steps.check_token.outputs.has_token == 'true' && steps.check_version.outputs.version_changed == 'true'
       run: npm publish
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN || '' }}
 
     - name: Skip publishing (no version change)
       if: steps.check_token.outputs.has_token == 'true' && steps.check_version.outputs.version_changed != 'true'

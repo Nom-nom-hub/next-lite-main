@@ -34,7 +34,12 @@ export function HeadProvider({ children }: { children: React.ReactNode }) {
       
       // Update meta tags
       meta.forEach(metaElement => {
-        const { name, property, content, httpEquiv } = metaElement.props;
+        const { name, property, content, httpEquiv } = metaElement.props as {
+          name?: string;
+          property?: string;
+          content?: string;
+          httpEquiv?: string;
+        };
         
         // Find existing meta tag to update or create a new one
         let existingMeta: HTMLMetaElement | null = null;
@@ -63,7 +68,12 @@ export function HeadProvider({ children }: { children: React.ReactNode }) {
       
       // Update link tags
       links.forEach(linkElement => {
-        const { rel, href, as, type } = linkElement.props;
+        const { rel, href, as, type } = linkElement.props as {
+          rel?: string;
+          href?: string;
+          as?: string;
+          type?: string;
+        };
         
         // Find existing link tag to update or create a new one
         let existingLink: HTMLLinkElement | null = null;
@@ -85,7 +95,13 @@ export function HeadProvider({ children }: { children: React.ReactNode }) {
       
       // Update script tags
       scripts.forEach(scriptElement => {
-        const { src, type, async, defer, id } = scriptElement.props;
+        const { src, type, async, defer, id } = scriptElement.props as {
+          src?: string;
+          type?: string;
+          async?: boolean;
+          defer?: boolean;
+          id?: string;
+        };
         
         // Find existing script tag to update or create a new one
         let existingScript: HTMLScriptElement | null = null;
@@ -106,8 +122,8 @@ export function HeadProvider({ children }: { children: React.ReactNode }) {
           if (id) newScript.setAttribute('id', id);
           
           // Add inline script content if provided
-          if (scriptElement.props.children) {
-            newScript.textContent = scriptElement.props.children;
+          if ((scriptElement.props as any).children) {
+            newScript.textContent = (scriptElement.props as any).children;
           }
           
           document.head.appendChild(newScript);
@@ -125,7 +141,7 @@ export function HeadProvider({ children }: { children: React.ReactNode }) {
       const { type, props } = child;
       
       if (type === 'title') {
-        setTitle(props.children);
+        setTitle((props as any).children);
       } else if (type === 'meta') {
         setMeta(prevMeta => [...prevMeta, child]);
       } else if (type === 'link') {

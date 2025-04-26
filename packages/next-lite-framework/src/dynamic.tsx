@@ -1,4 +1,4 @@
-import React, { ComponentType, lazy, Suspense, useState, useEffect } from 'react';
+import React, { ComponentType, lazy, Suspense, useState, useEffect, ReactNode } from 'react';
 import { ErrorBoundary } from './error-boundary';
 
 interface DynamicOptions {
@@ -8,18 +8,16 @@ interface DynamicOptions {
   error?: ComponentType<{ error: Error; reset: () => void }>;
 }
 
-interface LoadableOptions extends DynamicOptions {
-  loader: () => Promise<{ default: ComponentType<any> }>;
-}
+type Loader<P> = () => Promise<{ default: ComponentType<P> }>;
 
 /**
  * Dynamic import component for code splitting
  * Similar to Next.js dynamic import
  */
-export function dynamic<P = {}>(
-  importFunc: () => Promise<{ default: ComponentType<P> }>,
-  options: DynamicOptions = {}
-): ComponentType<P> {
+export function dynamic<P extends Record<string, unknown> = any>(
+  componentOrLoader: ComponentType<P> | (() => Promise<ComponentType<P>>),
+  options: any = {}
+): React.ComponentType<P> {
   const {
     loading: LoadingComponent,
     ssr = true,
@@ -31,6 +29,17 @@ export function dynamic<P = {}>(
   if (!ssr && typeof window === 'undefined') {
     return () => <></>;
   }
+
+  // Create importFunc to handle both component and loader
+  const importFunc = () => {
+    const result = typeof componentOrLoader === 'function' 
+      ? (componentOrLoader as Function)()
+      : Promise.resolve({ default: componentOrLoader });
+    
+    return result.then ? result.then((mod: any) => 
+      mod.default ? mod : { default: mod }
+    ) : Promise.resolve({ default: result });
+  };
 
   // Create lazy component
   const LazyComponent = lazy(importFunc);
@@ -45,13 +54,13 @@ export function dynamic<P = {}>(
       let isMounted = true;
 
       importFunc()
-        .then(module => {
+        .then((module: { default: ComponentType<P> }) => {
           if (isMounted) {
             setComponent(() => module.default);
             setIsLoading(false);
           }
         })
-        .catch(err => {
+        .catch((err: Error) => {
           if (isMounted) {
             setError(err);
             setIsLoading(false);
@@ -85,7 +94,7 @@ export function dynamic<P = {}>(
 
     // Render component
     if (Component) {
-      return <Component {...props} />;
+      return <Component {...(props as P)} />;
     }
 
     return null;
@@ -99,7 +108,7 @@ export function dynamic<P = {}>(
       return (
         <ErrorBoundary fallback={ErrorComponent ? (error, reset) => <ErrorComponent error={error} reset={reset} /> : undefined}>
           <Suspense fallback={fallback}>
-            <LazyComponent {...props} />
+            <LazyComponent {...(props as P)} />
           </Suspense>
         </ErrorBoundary>
       );
@@ -114,6 +123,17 @@ export function dynamic<P = {}>(
 /**
  * Create a loadable component with custom loading and error components
  */
+interface LoadableOptions {
+  loader: () => Promise<ComponentType<any>>;
+  loading?: ComponentType<any>;
+  ssr?: boolean;
+}
+
+function createDynamicComponent<T>(options: any): React.ComponentType<T> {
+  // @ts-ignore - Type compatibility is ensured at runtime
+  return dynamic(options.loader, options);
+}
+
 export function loadable<P = {}>(options: LoadableOptions): ComponentType<P> {
-  return dynamic<P>(options.loader, options);
+  return createDynamicComponent<P>(options);
 }

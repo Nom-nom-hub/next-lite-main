@@ -1,6 +1,6 @@
 {
   "name": "create-next-lite-app",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Create Next-Lite apps with one command",
   "main": "index.js",
   "bin": {

@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 
-interface FetchOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  headers?: Record<string, string>;
-  body?: any;
-  cache?: 'no-cache' | 'reload' | 'force-cache' | 'only-if-cached';
-  credentials?: 'include' | 'same-origin' | 'omit';
-  redirect?: 'follow' | 'error' | 'manual';
-  referrerPolicy?: string;
-  mode?: 'cors' | 'no-cors' | 'same-origin';
+export interface FetchOptions extends Omit<RequestInit, 'signal'> {
+  referrer?: string;
+  integrity?: string;
+  keepalive?: boolean;
+  signal?: AbortSignal;
 }
 
 interface UseFetchResult<T> {
@@ -32,13 +28,17 @@ export function useFetch<T = any>(url: string, options?: FetchOptions): UseFetch
       
       const response = await fetch(url, {
         method: options?.method || 'GET',
-        headers: options?.headers,
-        body: options?.body ? JSON.stringify(options.body) : undefined,
-        cache: options?.cache,
+        headers: options?.headers || {},
+        body: options?.body,
+        mode: options?.mode,
         credentials: options?.credentials,
+        cache: options?.cache,
         redirect: options?.redirect,
-        referrerPolicy: options?.referrerPolicy,
-        mode: options?.mode
+        referrer: options?.referrer,
+        referrerPolicy: options?.referrerPolicy as ReferrerPolicy | undefined,
+        integrity: options?.integrity,
+        keepalive: options?.keepalive,
+        signal: options?.signal
       });
       
       if (!response.ok) {

@@ -1,6 +1,6 @@
 {
   "name": "next-lite-framework",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "description": "A lightweight alternative to Next.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

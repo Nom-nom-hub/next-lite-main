@@ -1,297 +1,32 @@
-const esbuild = require('esbuild');
-const http = require('http');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs-extra');
+const esbuild = require('esbuild');
+const chokidar = require('chokidar');
 const WebSocket = require('ws');
-const cssModulesPlugin = require('./css-modules-plugin');
-const APIRouter = require('./api-router');
-const { generateRouterCode } = require('./route-loader');
+const express = require('express');
+const { cssModulesPlugin } = require('./css-modules-plugin');
 
 // Create WebSocket server for HMR
-const wss = new WebSocket.Server({ port: 8081 });
+const wss = new WebSocket.Server({ noServer: true });
+// Track module dependencies
+const moduleDependencies = new Map();
+// Track file to module ID mapping
+const fileToModuleId = new Map();
 
-// Initialize API Router
-const apiRouter = new APIRouter(path.join(process.cwd(), 'example', 'pages', 'api'));
-
-let context;
-
-// Ensure build directories exist
-const nextDir = path.join(process.cwd(), '.next');
-const staticDir = path.join(nextDir, 'static');
-if (!fs.existsSync(nextDir)) {
-  fs.mkdirSync(nextDir, { recursive: true });
-}
-if (!fs.existsSync(staticDir)) {
-  fs.mkdirSync(staticDir, { recursive: true });
-}
-
-// Generate client entry point
-function generateClientEntry() {
-  console.log('[Build] Generating client entry...');
-  const pagesDir = path.join(process.cwd(), 'example', 'pages');
-  const routerCode = generateRouterCode(pagesDir);
-  const clientPath = path.join(process.cwd(), '.next', 'client-entry.tsx');
-
-  fs.writeFileSync(clientPath, routerCode);
-  console.log('[Build] Client entry generated at:', clientPath);
-  return clientPath;
-}
-
-// Watch for file changes
-async function watchFiles() {
-  const watcher = fs.watch('example', { recursive: true }, async (eventType, filename) => {
-    if (filename) {
-      console.log(`[HMR] File changed: ${filename}`);
-
-      // Reload API routes if an API file changed
-      if (filename.startsWith('pages/api/')) {
-        console.log('[HMR] Reloading API routes...');
-        Object.keys(require.cache).forEach(key => {
-          if (key.includes('/pages/api/')) {
-            delete require.cache[key];
-          }
-        });
-        apiRouter.loadRoutes();
-      }
-
-      // Regenerate client entry if pages changed
-      if (filename.startsWith('pages/') && !filename.startsWith('pages/api/')) {
-        console.log('[HMR] Regenerating routes...');
-        generateClientEntry();
-      }
-
-      try {
-        // Rebuild the project
-        if (context) {
-          console.log('[HMR] Rebuilding...');
-          await context.rebuild();
-          console.log('[HMR] Build complete');
-        }
-
-        // Notify clients to reload
-        wss.clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({
-              type: 'reload',
-              file: filename
-            }));
-          }
-        });
-      } catch (error) {
-        console.error('[HMR] Build failed:', error);
-        wss.clients.forEach(client => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify({
-              type: 'error',
-              error: error.message
-            }));
-          }
-        });
-      }
-    }
-  });
-
-  process.on('SIGINT', () => {
-    watcher.close();
-    process.exit(0);
-  });
-}
-
+/**
+ * Start development server
+ */
 async function startDevServer() {
-  // Create HTTP server
-  const server = http.createServer(async (req, res) => {
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    console.log(`[Server] Received request for: ${url.pathname}`);
-
-    // Handle API routes
-    if (url.pathname.startsWith('/api/')) {
-      console.log(`[Server] Handling API request: ${url.pathname}`);
-      return apiRouter.handleRequest(req, res);
-    }
-
-    // Serve static files from .next directory
-    if (url.pathname.startsWith('/.next/')) {
-      try {
-        console.log(`[Server] Serving file from .next: ${url.pathname}`);
-        const filePath = path.join(process.cwd(), url.pathname);
-        console.log('[Server] Full path:', filePath);
-
-        // Check if file exists
-        if (!fs.existsSync(filePath)) {
-          console.error('[Server] File not found:', filePath);
-          res.writeHead(404);
-          res.end('Not found');
-          return;
-        }
-
-        const ext = path.extname(filePath);
-        const contentType = {
-          '.html': 'text/html',
-          '.js': 'application/javascript',
-          '.jsx': 'application/javascript',
-          '.ts': 'application/javascript',
-          '.tsx': 'application/javascript',
-          '.css': 'text/css',
-        }[ext] || 'text/plain';
-
-        const content = await fs.promises.readFile(filePath);
-        res.writeHead(200, {
-          'Content-Type': contentType,
-          'Cache-Control': 'no-cache',
-          'Access-Control-Allow-Origin': '*'
-        });
-        res.end(content);
-      } catch (error) {
-        console.error('[Server] Error serving file:', error);
-        res.writeHead(500);
-        res.end('Internal Server Error');
-      }
-      return;
-    }
-
-    // For all other routes, serve index.html
-    try {
-      console.log('[Server] Serving index.html');
-      const indexPath = path.join(process.cwd(), 'example', 'index.html');
-      let content = await fs.promises.readFile(indexPath, 'utf8');
-
-      // Inject HMR client code
-      const hmrClient = `
-        <script>
-          const ws = new WebSocket('ws://localhost:8081');
-          let loadingOverlay;
-
-          // Create loading overlay
-          function createLoadingOverlay() {
-            const overlay = document.createElement('div');
-            overlay.style.cssText = \`
-              position: fixed;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background: rgba(0, 0, 0, 0.7);
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              z-index: 9999;
-              opacity: 0;
-              visibility: hidden;
-              transition: opacity 0.2s ease, visibility 0.2s ease;
-            \`;
-
-            const content = document.createElement('div');
-            content.style.textAlign = 'center';
-
-            const spinner = document.createElement('div');
-            spinner.style.cssText = \`
-              width: 50px;
-              height: 50px;
-              border: 3px solid rgba(255, 255, 255, 0.1);
-              border-radius: 50%;
-              border-top-color: #7928CA;
-              animation: spin 1s ease-in-out infinite;
-              margin: 0 auto;
-            \`;
-
-            const message = document.createElement('div');
-            message.style.cssText = \`
-              color: white;
-              font-size: 1.1rem;
-              font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-              margin-top: 1rem;
-              background: linear-gradient(to right, #7928CA, #FF0080);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-            \`;
-            message.textContent = 'Reloading...';
-
-            const style = document.createElement('style');
-            style.textContent = \`
-              @keyframes spin {
-                to { transform: rotate(360deg); }
-              }
-            \`;
-
-            content.appendChild(spinner);
-            content.appendChild(message);
-            overlay.appendChild(content);
-            document.head.appendChild(style);
-            document.body.appendChild(overlay);
-
-            return {
-              show: () => {
-                overlay.style.opacity = '1';
-                overlay.style.visibility = 'visible';
-              },
-              hide: () => {
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-              },
-              setMessage: (text) => {
-                message.textContent = text;
-              }
-            };
-          }
-
-          ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log('[HMR] Received:', data);
-
-            if (!loadingOverlay) {
-              loadingOverlay = createLoadingOverlay();
-            }
-
-            if (data.type === 'reload') {
-              console.log('[HMR] Reloading due to change in:', data.file);
-              loadingOverlay.setMessage('Reloading...');
-              loadingOverlay.show();
-
-              // Add a small delay before reloading to show the overlay
-              setTimeout(() => {
-                window.location.reload();
-              }, 300);
-            } else if (data.type === 'error') {
-              console.error('[HMR] Build error:', data.error);
-              loadingOverlay.setMessage('Build Error! Check console.');
-              loadingOverlay.show();
-              setTimeout(() => loadingOverlay.hide(), 2000);
-            }
-          };
-
-          ws.onopen = () => console.log('[HMR] Connected to dev server');
-          ws.onclose = () => console.log('[HMR] Disconnected from dev server');
-          ws.onerror = (error) => console.error('[HMR] WebSocket error:', error);
-
-          // Log navigation events
-          window.addEventListener('popstate', () => {
-            console.log('[Router] Navigation:', window.location.pathname);
-          });
-
-          window.addEventListener('pushstate', () => {
-            console.log('[Router] Navigation:', window.location.pathname);
-          });
-        </script>
-      `;
-      content = content.replace('</body>', `${hmrClient}</body>`);
-
-      res.writeHead(200, {
-        'Content-Type': 'text/html',
-        'Cache-Control': 'no-cache',
-        'Access-Control-Allow-Origin': '*'
-      });
-      res.end(content);
-    } catch (error) {
-      console.error('[Server] Error serving index.html:', error);
-      res.writeHead(500);
-      res.end('Internal Server Error');
-    }
-  });
-
-  // Generate initial client entry
-  console.log('[Build] Generating client entry...');
-  const clientEntry = generateClientEntry();
-
+  const app = express();
+  const port = process.env.PORT || 3000;
+  
+  // Create client entry
+  const clientEntry = path.join(process.cwd(), '.next', 'client-entry.js');
+  await generateClientEntry();
+  
+  // Setup esbuild context
+  let context;
+  
   // Start esbuild
   try {
     console.log('[Build] Starting esbuild...');
@@ -310,10 +45,12 @@ async function startDevServer() {
         '.css': 'css'
       },
       define: {
-        'process.env.NODE_ENV': '"development"'
+        'process.env.NODE_ENV': '"development"',
+        'process.env.HMR_PORT': port.toString()
       },
       plugins: [
         cssModulesPlugin(),
+        hmrPlugin()
       ],
       external: ['react', 'react-dom', 'react-dom/client', 'react/jsx-runtime'],
       splitting: false,
@@ -321,23 +58,325 @@ async function startDevServer() {
       minify: false,
       metafile: true,
     });
-
-    await context.rebuild();
+    
+    // Initial build
+    const result = await context.rebuild();
+    
+    // Track dependencies from metafile
+    if (result.metafile) {
+      updateDependencyMap(result.metafile);
+    }
+    
     console.log('[Build] Initial build complete');
-
-    // Start watching for changes
-    await watchFiles();
-
-    // Start the server
-    server.listen(3000, () => {
-      console.log('\n🚀 Dev server running at:');
-      console.log('   > Local:    http://localhost:3000');
-      console.log('   > HMR:      ws://localhost:8081\n');
-    });
   } catch (error) {
-    console.error('[Build] Error starting esbuild:', error);
+    console.error('[Build] Failed:', error);
     process.exit(1);
+  }
+  
+  // Serve static files
+  app.use('/_next/static', express.static(path.join(process.cwd(), '.next', 'static')));
+  
+  // Serve HTML
+  app.get('*', (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Next-Lite App</title>
+        </head>
+        <body>
+          <div id="root"></div>
+          <script src="/_next/static/client.js"></script>
+        </body>
+      </html>
+    `);
+  });
+  
+  // Start server
+  const server = app.listen(port, () => {
+    console.log(`[Server] Development server running at http://localhost:${port}`);
+  });
+  
+  // Setup WebSocket server
+  server.on('upgrade', (request, socket, head) => {
+    if (request.url === '/__hmr') {
+      wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, request);
+      });
+    } else {
+      socket.destroy();
+    }
+  });
+  
+  // Watch for file changes
+  const watcher = chokidar.watch([
+    path.join(process.cwd(), 'pages', '**/*.{js,jsx,ts,tsx}'),
+    path.join(process.cwd(), 'components', '**/*.{js,jsx,ts,tsx}'),
+    path.join(process.cwd(), 'styles', '**/*.css')
+  ], {
+    ignored: /(^|[\/\\])\../, // Ignore dotfiles
+    persistent: true
+  });
+  
+  watcher.on('change', async (filename) => {
+    console.log(`[HMR] File changed: ${filename}`);
+    
+    try {
+      // Regenerate client entry if needed
+      if (filename.includes('pages/')) {
+        console.log('[HMR] Regenerating routes...');
+        await generateClientEntry();
+      }
+      
+      // Rebuild the project
+      console.log('[HMR] Rebuilding...');
+      const result = await context.rebuild();
+      console.log('[HMR] Build complete');
+      
+      // Update dependency map
+      if (result.metafile) {
+        updateDependencyMap(result.metafile);
+      }
+      
+      // Check if we can do HMR or need a full reload
+      const moduleId = fileToModuleId.get(filename);
+      
+      if (moduleId) {
+        // Get the updated module code
+        const moduleCode = await fs.readFile(filename, 'utf8');
+        
+        // Send HMR update
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({
+              type: 'update',
+              moduleId,
+              update: moduleCode
+            }));
+          }
+        });
+      } else {
+        // Full reload required
+        wss.clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({
+              type: 'reload',
+              file: filename
+            }));
+          }
+        });
+      }
+    } catch (error) {
+      console.error('[HMR] Build failed:', error);
+      wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify({
+            type: 'error',
+            error: error.message
+          }));
+        }
+      });
+    }
+  });
+  
+  process.on('SIGINT', () => {
+    watcher.close();
+    server.close();
+    process.exit(0);
+  });
+}
+
+/**
+ * Update dependency map from metafile
+ * @param {Object} metafile - esbuild metafile
+ */
+function updateDependencyMap(metafile) {
+  moduleDependencies.clear();
+  fileToModuleId.clear();
+  
+  // Process outputs
+  for (const [outputFile, output] of Object.entries(metafile.outputs)) {
+    // Process inputs
+    for (const [inputFile, input] of Object.entries(output.inputs)) {
+      const normalizedPath = path.normalize(inputFile);
+      
+      // Generate a module ID
+      const moduleId = path.relative(process.cwd(), normalizedPath);
+      
+      // Map file to module ID
+      fileToModuleId.set(normalizedPath, moduleId);
+      
+      // Track dependencies
+      if (!moduleDependencies.has(moduleId)) {
+        moduleDependencies.set(moduleId, new Set());
+      }
+      
+      // Add imports as dependencies
+      if (input.imports) {
+        for (const imp of input.imports) {
+          const depId = path.relative(process.cwd(), imp.path);
+          moduleDependencies.get(moduleId).add(depId);
+        }
+      }
+    }
   }
 }
 
-startDevServer();
+/**
+ * Generate client entry file
+ */
+async function generateClientEntry() {
+  const pagesDir = path.join(process.cwd(), 'pages');
+  const outputDir = path.join(process.cwd(), '.next');
+  
+  // Ensure output directory exists
+  await fs.ensureDir(outputDir);
+  
+  // Get all page files
+  const pageFiles = await getPageFiles(pagesDir);
+  
+  // Generate routes map
+  const routes = pageFiles.map(file => {
+    const route = file
+      .replace(/\.(js|jsx|ts|tsx)$/, '')
+      .replace(/\/index$/, '/')
+      .replace(/\[([^\]]+)\]/g, ':$1');
+    
+    return {
+      route: route === '' ? '/' : `/${route}`,
+      component: file
+    };
+  });
+  
+  // Generate client entry
+  const clientEntry = `
+    import React from 'react';
+    import { createRoot } from 'react-dom/client';
+    import { BrowserRouter, Routes, Route } from 'react-router-dom';
+    import hmr from '../src/client/hmr';
+    
+    // Import pages
+    ${routes.map((route, index) => 
+      `import Page${index} from '../pages/${route.component}';`
+    ).join('\n')}
+    
+    // Register pages for HMR
+    ${routes.map((route, index) => 
+      `hmr.register('pages/${route.component}', (updatedModule) => {
+        Page${index} = updatedModule.default || updatedModule;
+        renderApp();
+      });`
+    ).join('\n')}
+    
+    function App() {
+      return (
+        <BrowserRouter>
+          <Routes>
+            ${routes.map((route, index) => 
+              `<Route path="${route.route}" element={<Page${index} />} />`
+            ).join('\n')}
+          </Routes>
+        </BrowserRouter>
+      );
+    }
+    
+    let root;
+    
+    function renderApp() {
+      if (!root) {
+        root = createRoot(document.getElementById('root'));
+      }
+      root.render(<App />);
+    }
+    
+    renderApp();
+  `;
+  
+  // Write client entry
+  await fs.writeFile(path.join(outputDir, 'client-entry.js'), clientEntry);
+}
+
+/**
+ * Get all page files in a directory
+ * @param {string} dir - Directory to search
+ * @param {string} prefix - Prefix for recursive calls
+ * @returns {Promise<Array<string>>} - Paths to page files
+ */
+async function getPageFiles(dir, prefix = '') {
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    
+    const files = [];
+    
+    for (const entry of entries) {
+      const entryPath = path.join(dir, entry.name);
+      
+      if (entry.isDirectory()) {
+        // Skip API routes
+        if (entry.name === 'api') continue;
+        
+        // Recursively get files in subdirectories
+        const subFiles = await getPageFiles(entryPath, path.join(prefix, entry.name));
+        files.push(...subFiles);
+      } else if (
+        entry.name.endsWith('.js') || 
+        entry.name.endsWith('.jsx') || 
+        entry.name.endsWith('.ts') || 
+        entry.name.endsWith('.tsx')
+      ) {
+        // Skip special files
+        if (entry.name.startsWith('_')) continue;
+        
+        // Add page files
+        files.push(path.join(prefix, entry.name));
+      }
+    }
+    
+    return files;
+  } catch (error) {
+    console.error(`Error reading directory ${dir}:`, error);
+    return [];
+  }
+}
+
+/**
+ * HMR plugin for esbuild
+ */
+function hmrPlugin() {
+  return {
+    name: 'hmr-plugin',
+    setup(build) {
+      // Add HMR code to modules
+      build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async (args) => {
+        // Skip node_modules
+        if (args.path.includes('node_modules')) {
+          return null;
+        }
+        
+        const contents = await fs.readFile(args.path, 'utf8');
+        const moduleId = path.relative(process.cwd(), args.path);
+        
+        // Add HMR acceptance code
+        const hmrCode = `
+          // HMR
+          if (module.hot) {
+            module.hot.accept();
+          }
+        `;
+        
+        return {
+          contents: contents + hmrCode,
+          loader: path.extname(args.path).substring(1)
+        };
+      });
+    }
+  };
+}
+
+// Start the dev server
+startDevServer().catch(err => {
+  console.error('Failed to start dev server:', err);
+  process.exit(1);
+});

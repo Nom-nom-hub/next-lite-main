@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ReactNode, ErrorInfo } from 'react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -7,7 +7,6 @@ interface ErrorBoundaryProps {
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
   error: Error | null;
 }
 
@@ -18,77 +17,41 @@ interface ErrorBoundaryState {
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = {
-      hasError: false,
-      error: null
-    };
+    this.state = { error: null };
+    this.resetErrorBoundary = this.resetErrorBoundary.bind(this);
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    // Update state so the next render will show the fallback UI
-    return {
-      hasError: true,
-      error
-    };
+    return { error };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log the error to an error reporting service
-    console.error('Error caught by ErrorBoundary:', error, errorInfo);
-    
-    // Call the onError callback if provided
+  componentDidCatch(error: Error, info: ErrorInfo): void {
     if (this.props.onError) {
-      this.props.onError(error, errorInfo);
+      this.props.onError(error, info);
     }
   }
 
-  resetErrorBoundary = (): void => {
-    this.setState({
-      hasError: false,
-      error: null
-    });
-  };
+  resetErrorBoundary(): void {
+    this.setState({ error: null });
+  }
 
   render(): ReactNode {
-    if (this.state.hasError) {
-      // Render the fallback UI
+    if (this.state.error) {
       if (this.props.fallback) {
-        if (typeof this.props.fallback === 'function' && this.state.error) {
+        if (typeof this.props.fallback === 'function') {
           return this.props.fallback(this.state.error, this.resetErrorBoundary);
         }
         return this.props.fallback;
       }
-
-      // Default fallback UI
       return (
-        <div style={{
-          padding: '20px',
-          margin: '20px',
-          border: '1px solid #f5c6cb',
-          borderRadius: '4px',
-          backgroundColor: '#f8d7da',
-          color: '#721c24'
-        }}>
+        <div style={{ color: 'red', padding: '1rem' }}>
           <h2>Something went wrong</h2>
-          <details style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>
-            <summary>Show error details</summary>
-            <p>{this.state.error?.message}</p>
-            <p>{this.state.error?.stack}</p>
+          <details style={{ whiteSpace: 'pre-wrap' }}>
+            {this.state.error.toString()}
+            <br />
+            {this.state.error.stack}
           </details>
-          <button
-            onClick={this.resetErrorBoundary}
-            style={{
-              marginTop: '10px',
-              padding: '8px 16px',
-              backgroundColor: '#721c24',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Try again
-          </button>
+          <button onClick={this.resetErrorBoundary}>Try again</button>
         </div>
       );
     }

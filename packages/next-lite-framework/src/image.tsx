@@ -61,7 +61,7 @@ export function Image({
   // Preload image if priority is true
   useEffect(() => {
     if (priority && typeof window !== 'undefined') {
-      const img = new Image();
+      const img = new window.Image();
       img.src = getOptimizedSrc();
     }
   }, [priority, src]);

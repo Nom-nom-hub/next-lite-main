@@ -4,7 +4,26 @@ import fs from 'fs-extra';
 import path from 'path';
 import { HeadProvider } from '../head';
 import { RouterProvider } from '../router';
-import { NextApiRequest, NextApiResponse, GetServerSideProps, GetStaticProps, GetStaticPaths } from '../types';
+import { NextApiRequest, NextApiResponse, GetServerSideProps, GetStaticPaths } from '../types';
+
+// Define a local interface for GetStaticPropsContext
+interface GetStaticPropsContext {
+  params?: { [key: string]: any };
+  preview?: boolean;
+  previewData?: any;
+}
+
+// Define a local type for GetStaticProps
+type GetStaticProps = (context: GetStaticPropsContext) => Promise<any>;
+
+interface ExtendedGetServerSidePropsContext {
+  req: NextApiRequest;
+  res: NextApiResponse<any>;
+  params?: { [key: string]: any };
+  query: Record<string, string | string[]>;
+  preview?: boolean;
+  previewData?: any;
+}
 
 interface RenderPageOptions {
   req: NextApiRequest;
@@ -43,9 +62,7 @@ export async function renderPage({ req, res, pathname, query }: RenderPageOption
         req,
         res,
         params: {}, // TODO: Extract params from pathname
-        query,
-        preview: false,
-        previewData: undefined
+        query
       });
       
       // Handle notFound
