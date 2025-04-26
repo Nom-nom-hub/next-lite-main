@@ -1,6 +1,21 @@
-# Next-Lite 🚀
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Nom-nom-hub/next-lite-main/main/assets/next-lite-logo.png" alt="Next-Lite Logo" width="300" />
+  <h1>Next-Lite</h1>
+  <p>A lightweight, high-performance alternative to Next.js</p>
+</div>
 
-A lightweight, high-performance alternative to Next.js that prioritizes speed and simplicity. Built with esbuild at its core, Next-Lite offers a streamlined development experience while maintaining the essential features modern web developers need.
+<div align="center">
+  <a href="https://www.npmjs.com/package/next-lite-framework"><img src="https://img.shields.io/npm/v/next-lite-framework.svg?style=flat-square" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/next-lite-framework"><img src="https://img.shields.io/npm/dm/next-lite-framework.svg?style=flat-square" alt="npm downloads"></a>
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Nom-nom-hub/next-lite-main.svg?style=flat-square" alt="license"></a>
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/actions"><img src="https://img.shields.io/github/actions/workflow/status/Nom-nom-hub/next-lite-main/ci.yml?branch=main&style=flat-square" alt="build status"></a>
+  <a href="https://bundlephobia.com/package/next-lite-framework"><img src="https://img.shields.io/bundlephobia/minzip/next-lite-framework?style=flat-square" alt="bundle size"></a>
+  <a href="https://github.com/Nom-nom-hub/next-lite-main/stargazers"><img src="https://img.shields.io/github/stars/Nom-nom-hub/next-lite-main?style=flat-square" alt="github stars"></a>
+</div>
+
+<br />
+
+Next-Lite is a zero-dependency, blazing-fast React framework that prioritizes speed and simplicity. Built with esbuild at its core, Next-Lite offers a streamlined development experience while maintaining the essential features modern web developers need.
 
 ## Why Next-Lite? 🤔
 
