@@ -1,31 +1,77 @@
-# Source
-example/
+# Development files
+.github/
+.flashpack
+advanced/
+components/
+context/
+css-modules-plugin.js
+dev-server.js
+dev.js
+docs/
+examples/
+fixed-dev-server.js
+implementation-plan.md
+IMPLEMENTATION.md
+my-app/
+packages/
 scripts/
 src/
+utils/
 
 # Tests
 __tests__/
 coverage/
+*.test.js
+*.test.ts
+*.test.tsx
+jest.config.js
+jest.setup.js
 
 # Build
 .next/
+dist/
+build/
+out/
 
 # Config files
 .gitignore
 .eslintrc
 .prettierrc
 tsconfig.json
+.npmignore
+.npmrc
+.babelrc
+.editorconfig
+.travis.yml
+.circleci/
+.github/
 
 # IDE
 .idea/
 .vscode/
+*.sublime-*
 
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # OS
 .DS_Store
 Thumbs.db
+._*
+.Spotlight-V100
+.Trashes
 
 # node
 node_modules/
+.pnp/
+.pnp.js
+
+# misc
+*.tgz
+.env
+.env.*
+!.env.example

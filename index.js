@@ -1,8 +1,8 @@
 /**
  * Next-Lite Framework
  * A lightweight alternative to Next.js
- * 
- * @version 0.3.0
+ *
+ * @version 0.3.1
  * @license MIT
  */
 
@@ -25,7 +25,7 @@ exports.createApiHandler = require('./src/server/api').createApiHandler;
 exports.Router = require('./src/router');
 
 // Export version
-exports.version = '0.3.0';
+exports.version = '0.3.1';
 
 // Default export
 module.exports.default = exports;
