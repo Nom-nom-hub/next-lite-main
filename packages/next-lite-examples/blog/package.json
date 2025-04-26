@@ -1,0 +1,21 @@
+{
+  "name": "next-lite-blog-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next-lite dev",
+    "build": "next-lite build",
+    "start": "next-lite start"
+  },
+  "dependencies": {
+    "next-lite-framework": "0.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.7",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "typescript": "^4.8.4"
+  }
+}

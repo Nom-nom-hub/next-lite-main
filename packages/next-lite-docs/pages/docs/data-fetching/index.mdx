@@ -1,0 +1,334 @@
+# Data Fetching
+
+Next-Lite provides several methods for fetching data in your applications.
+
+## Client-side Data Fetching
+
+### useFetch Hook
+
+The `useFetch` hook is a simple way to fetch data on the client side:
+
+```jsx
+import { useFetch } from 'next-lite-framework';
+
+function UserProfile() {
+  const { data, error, loading, mutate } = useFetch('/api/user');
+  
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return (
+    <div>
+      <h1>{data.name}</h1>
+      <p>{data.email}</p>
+      <button onClick={() => mutate()}>Refresh</button>
+    </div>
+  );
+}
+```
+
+### useSWR Hook
+
+The `useSWR` hook provides a more powerful way to fetch data with caching, revalidation, and more:
+
+```jsx
+import { useSWR } from 'next-lite-framework';
+
+function Dashboard() {
+  const { data, error, loading, mutate } = useSWR('/api/dashboard', url => 
+    fetch(url).then(res => res.json())
+  );
+  
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Total Users: {data.totalUsers}</p>
+      <p>Active Users: {data.activeUsers}</p>
+      <button onClick={() => mutate()}>Refresh</button>
+    </div>
+  );
+}
+```
+
+## Server-side Data Fetching
+
+### getServerSideProps
+
+Use `getServerSideProps` to fetch data on each request:
+
+```jsx
+export default function Page({ data }) {
+  return <div>{data.message}</div>;
+}
+
+export async function getServerSideProps(context) {
+  // Fetch data from external API
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+  
+  // Pass data to the page via props
+  return { props: { data } };
+}
+```
+
+The `context` parameter contains:
+
+- `req`: The HTTP request object
+- `res`: The HTTP response object
+- `params`: Route parameters for dynamic routes
+- `query`: Query string parameters
+- `preview`: Whether the page is in preview mode
+- `previewData`: Preview data set by `setPreviewData`
+
+### getStaticProps
+
+Use `getStaticProps` to fetch data at build time:
+
+```jsx
+export default function Blog({ posts }) {
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+
+export async function getStaticProps() {
+  // Fetch data from external API
+  const res = await fetch('https://api.example.com/posts');
+  const posts = await res.json();
+  
+  // Pass data to the page via props
+  return {
+    props: { posts },
+    // Revalidate every 10 seconds
+    revalidate: 10
+  };
+}
+```
+
+### getStaticPaths
+
+Use `getStaticPaths` with `getStaticProps` for dynamic routes:
+
+```jsx
+export default function Post({ post }) {
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </div>
+  );
+}
+
+export async function getStaticPaths() {
+  // Fetch list of posts
+  const res = await fetch('https://api.example.com/posts');
+  const posts = await res.json();
+  
+  // Get the paths we want to pre-render
+  const paths = posts.map((post) => ({
+    params: { id: post.id.toString() }
+  }));
+  
+  return {
+    paths,
+    // Fallback options: false, true, or 'blocking'
+    fallback: false
+  };
+}
+
+export async function getStaticProps({ params }) {
+  // Fetch single post
+  const res = await fetch(`https://api.example.com/posts/${params.id}`);
+  const post = await res.json();
+  
+  return {
+    props: { post }
+  };
+}
+```
+
+## Incremental Static Regeneration (ISR)
+
+Next-Lite supports Incremental Static Regeneration, which allows you to update static pages after they've been built:
+
+```jsx
+export async function getStaticProps() {
+  const res = await fetch('https://api.example.com/posts');
+  const posts = await res.json();
+  
+  return {
+    props: { posts },
+    // Revalidate every 60 seconds
+    revalidate: 60
+  };
+}
+```
+
+## API Routes
+
+You can create API routes in the `pages/api` directory:
+
+```jsx
+// pages/api/user.js
+export default function handler(req, res) {
+  const { method } = req;
+  
+  switch (method) {
+    case 'GET':
+      // Get user data
+      res.status(200).json({ name: 'John Doe', email: 'john@example.com' });
+      break;
+    case 'POST':
+      // Create or update user
+      res.status(200).json({ message: 'User created/updated' });
+      break;
+    default:
+      res.setHeader('Allow', ['GET', 'POST']);
+      res.status(405).end(`Method ${method} Not Allowed`);
+  }
+}
+```
+
+## Error Handling
+
+### Client-side Error Handling
+
+```jsx
+import { useFetch } from 'next-lite-framework';
+
+function UserProfile() {
+  const { data, error, loading } = useFetch('/api/user');
+  
+  if (loading) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
+  
+  return <div>{/* Render user data */}</div>;
+}
+```
+
+### Server-side Error Handling
+
+```jsx
+export async function getServerSideProps() {
+  try {
+    const res = await fetch('https://api.example.com/data');
+    
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.status}`);
+    }
+    
+    const data = await res.json();
+    
+    return { props: { data } };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    
+    return {
+      props: {
+        error: {
+          message: error.message,
+          status: error.status || 500
+        },
+        data: null
+      }
+    };
+  }
+}
+
+export default function Page({ data, error }) {
+  if (error) {
+    return (
+      <div>
+        <h1>Error: {error.status}</h1>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
+  
+  return <div>{/* Render data */}</div>;
+}
+```
+
+## Advanced Techniques
+
+### Parallel Data Fetching
+
+```jsx
+import { useSWR } from 'next-lite-framework';
+
+function Dashboard() {
+  // Fetch multiple resources in parallel
+  const { data: users } = useSWR('/api/users', url => fetch(url).then(res => res.json()));
+  const { data: posts } = useSWR('/api/posts', url => fetch(url).then(res => res.json()));
+  const { data: comments } = useSWR('/api/comments', url => fetch(url).then(res => res.json()));
+  
+  // Show loading state until all data is loaded
+  if (!users || !posts || !comments) {
+    return <div>Loading...</div>;
+  }
+  
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <div>
+        <h2>Users ({users.length})</h2>
+        {/* Render users */}
+      </div>
+      <div>
+        <h2>Posts ({posts.length})</h2>
+        {/* Render posts */}
+      </div>
+      <div>
+        <h2>Comments ({comments.length})</h2>
+        {/* Render comments */}
+      </div>
+    </div>
+  );
+}
+```
+
+### Dependent Data Fetching
+
+```jsx
+import { useSWR } from 'next-lite-framework';
+
+function UserPosts() {
+  // Fetch user first
+  const { data: user } = useSWR('/api/user', url => fetch(url).then(res => res.json()));
+  
+  // Then fetch user's posts once we have the user ID
+  const { data: posts } = useSWR(
+    user ? `/api/posts?userId=${user.id}` : null,
+    url => fetch(url).then(res => res.json())
+  );
+  
+  if (!user) return <div>Loading user...</div>;
+  if (!posts) return <div>Loading posts...</div>;
+  
+  return (
+    <div>
+      <h1>{user.name}'s Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```

@@ -1,0 +1,190 @@
+# Routing
+
+Next-Lite uses a file-based routing system similar to Next.js. Pages are associated with routes based on their file name.
+
+## Basic Routing
+
+Files in the `pages` directory automatically become routes:
+
+- `pages/index.jsx` → `/`
+- `pages/about.jsx` → `/about`
+- `pages/contact.jsx` → `/contact`
+
+## Nested Routes
+
+You can create nested routes by creating directories inside the `pages` directory:
+
+- `pages/blog/index.jsx` → `/blog`
+- `pages/blog/first-post.jsx` → `/blog/first-post`
+- `pages/blog/categories/index.jsx` → `/blog/categories`
+
+## Dynamic Routes
+
+Dynamic routes allow you to create pages that can match different paths:
+
+- `pages/blog/[slug].jsx` → `/blog/:slug` (e.g., `/blog/hello-world`)
+- `pages/[category]/[product].jsx` → `/:category/:product` (e.g., `/electronics/laptop`)
+
+Inside your page component, you can access the dynamic parameters using the `useRouter` hook:
+
+```jsx
+import { useRouter } from 'next-lite-framework';
+
+export default function BlogPost() {
+  const router = useRouter();
+  const { slug } = router.query;
+  
+  return (
+    <div>
+      <h1>Blog Post: {slug}</h1>
+    </div>
+  );
+}
+```
+
+## Catch-all Routes
+
+Catch-all routes can match any number of path segments:
+
+- `pages/blog/[...slug].jsx` → `/blog/*` (e.g., `/blog/2022/01/01/hello-world`)
+
+The `slug` parameter will be an array of path segments:
+
+```jsx
+import { useRouter } from 'next-lite-framework';
+
+export default function BlogPost() {
+  const router = useRouter();
+  const { slug } = router.query; // e.g., ['2022', '01', '01', 'hello-world']
+  
+  return (
+    <div>
+      <h1>Blog Post: {slug.join('/')}</h1>
+    </div>
+  );
+}
+```
+
+## Optional Catch-all Routes
+
+Optional catch-all routes can match zero or more path segments:
+
+- `pages/[[...slug]].jsx` → `/` or `/*` (e.g., `/`, `/about`, `/blog/hello-world`)
+
+## Navigation
+
+### Link Component
+
+The `Link` component is used for client-side navigation between pages:
+
+```jsx
+import { Link } from 'next-lite-framework';
+
+export default function Navigation() {
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/about">About</Link>
+        </li>
+        <li>
+          <Link href="/blog/hello-world">Blog Post</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+```
+
+### Programmatic Navigation
+
+You can also navigate programmatically using the `useRouter` hook:
+
+```jsx
+import { useRouter } from 'next-lite-framework';
+
+export default function LoginForm() {
+  const router = useRouter();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Perform login...
+    
+    // Redirect to dashboard
+    router.push('/dashboard');
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      <button type="submit">Log In</button>
+    </form>
+  );
+}
+```
+
+### Navigation Options
+
+The `Link` component and `router.push()` method support several options:
+
+```jsx
+// Basic navigation
+<Link href="/about">About</Link>
+
+// With query parameters
+<Link href="/blog?category=tech">Tech Blog</Link>
+
+// With route as object
+<Link href={{ pathname: '/blog', query: { category: 'tech' } }}>
+  Tech Blog
+</Link>
+
+// With hash
+<Link href="/about#team">About Team</Link>
+
+// Replace instead of push
+<Link href="/about" replace>About</Link>
+
+// With scroll behavior
+<Link href="/about" scroll={false}>About</Link>
+```
+
+## Router Events
+
+You can listen to router events using the `router.events` object:
+
+```jsx
+import { useRouter } from 'next-lite-framework';
+import { useEffect } from 'react';
+
+export default function MyComponent() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      console.log(`Route changed to: ${url}`);
+    };
+    
+    router.events.on('routeChangeStart', handleRouteChange);
+    
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
+  
+  return <div>My Component</div>;
+}
+```
+
+Available events:
+
+- `routeChangeStart` - Fires when a route starts to change
+- `routeChangeComplete` - Fires when a route change is completed
+- `routeChangeError` - Fires when there's an error during route change
+- `beforeHistoryChange` - Fires before changing the browser's history
+- `hashChangeStart` - Fires when the hash will change
+- `hashChangeComplete` - Fires when the hash has changed

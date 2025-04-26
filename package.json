@@ -1,18 +1,17 @@
 {
-  "name": "next-lite-framework",
+  "name": "next-lite-monorepo",
   "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "description": "A lightweight, high-performance alternative to Next.js built with esbuild. Features file-based routing, HMR, CSS Modules, and TypeScript support out of the box, all while maintaining a minimal footprint and blazing-fast build times.",
-  "main": "dist/index.js",
-  "bin": {
-    "create-next-lite-app": "./scripts/create-app.js"
-  },
   "scripts": {
-    "dev": "node scripts/dev.js",
-    "build": "node scripts/build.js",
-    "start": "node scripts/prod-server.js",
-    "clean": "rd /s /q .next dist",
-    "test": "echo \"No tests yet\"",
-    "prepublishOnly": "npm run build"
+    "build": "npm run build --workspaces",
+    "dev": "npm run dev --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present"
   },
   "keywords": [
     "react",

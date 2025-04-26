@@ -1,0 +1,101 @@
+# Next-Lite Framework
+
+A lightweight, high-performance alternative to Next.js built with esbuild.
+
+## Features
+
+- **Fast Builds**: Uses esbuild for blazing-fast build times
+- **Simple Architecture**: Easy to understand and customize
+- **File-based Routing**: Intuitive routing based on your file structure
+- **API Routes**: Built-in API route support
+- **CSS Modules**: First-class support for CSS Modules
+- **TypeScript Support**: Full TypeScript integration
+- **Image Optimization**: Automatic image optimization
+- **Data Fetching**: SWR-like data fetching utilities
+- **Hot Module Replacement**: Fast refresh during development
+- **Small Bundle Size**: Optimized for production
+
+## Getting Started
+
+### Installation
+
+```bash
+# Create a new Next-Lite project
+npx create-next-lite my-app
+
+# Or install in an existing project
+npm install next-lite-framework
+```
+
+### Create a Page
+
+Create a file in the `pages` directory:
+
+```jsx
+// pages/index.jsx
+import React from 'react';
+import { Head } from 'next-lite-framework';
+
+export default function HomePage() {
+  return (
+    <>
+      <Head>
+        <title>Home | Next-Lite</title>
+      </Head>
+      <div>
+        <h1>Welcome to Next-Lite!</h1>
+        <p>A lightweight alternative to Next.js</p>
+      </div>
+    </>
+  );
+}
+```
+
+### Create an API Route
+
+Create a file in the `pages/api` directory:
+
+```js
+// pages/api/hello.js
+export default function handler(req, res) {
+  res.status(200).json({ message: 'Hello from Next-Lite!' });
+}
+```
+
+### Start Development Server
+
+```bash
+npx next-lite dev
+```
+
+### Build for Production
+
+```bash
+npx next-lite build
+```
+
+### Start Production Server
+
+```bash
+npx next-lite start
+```
+
+## Why Next-Lite?
+
+Next-Lite is designed for developers who want:
+
+1. **Faster builds** - esbuild is significantly faster than webpack
+2. **Simpler architecture** - easier to understand and customize
+3. **Smaller bundle sizes** - optimized for production
+4. **Essential features** - all the core features you need without bloat
+5. **Better performance** - optimized for speed and efficiency
+
+## Next Steps
+
+- [Installation](/docs/getting-started/installation)
+- [Project Structure](/docs/getting-started/project-structure)
+- [Routing](/docs/routing)
+- [Data Fetching](/docs/data-fetching)
+- [API Routes](/docs/api-routes)
+- [Styling](/docs/styling)
+- [Deployment](/docs/deployment)

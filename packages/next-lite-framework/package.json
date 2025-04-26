@@ -1,0 +1,48 @@
+{
+  "name": "next-lite-framework",
+  "version": "0.1.0",
+  "description": "A lightweight alternative to Next.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "next-lite": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest"
+  },
+  "keywords": [
+    "react",
+    "framework",
+    "next",
+    "lite",
+    "esbuild"
+  ],
+  "author": "Next-Lite Team",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0",
+    "esbuild": "^0.15.5",
+    "express": "^4.18.1",
+    "fs-extra": "^10.1.0",
+    "glob": "^8.0.3",
+    "ora": "^5.4.1",
+    "ws": "^8.8.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/fs-extra": "^9.0.13",
+    "@types/glob": "^8.0.0",
+    "@types/node": "^18.7.13",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/ws": "^8.5.3",
+    "typescript": "^4.7.4"
+  }
+}

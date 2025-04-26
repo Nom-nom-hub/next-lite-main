@@ -1,0 +1,35 @@
+{
+  "name": "next-lite-cli",
+  "version": "0.1.0",
+  "description": "Command line interface for Next-Lite framework",
+  "main": "dist/index.js",
+  "bin": {
+    "next-lite": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest"
+  },
+  "keywords": [
+    "next-lite",
+    "cli",
+    "framework",
+    "react"
+  ],
+  "author": "Next-Lite Team",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.4",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/inquirer": "^8.2.1",
+    "@types/node": "^18.7.13",
+    "typescript": "^4.7.4"
+  }
+}

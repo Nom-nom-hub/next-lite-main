@@ -1,0 +1,169 @@
+# Installation
+
+There are multiple ways to get started with Next-Lite.
+
+## Create a New Project
+
+The easiest way to get started is to create a new project using the `create-next-lite` CLI:
+
+```bash
+npx create-next-lite my-app
+cd my-app
+npm run dev
+```
+
+This will create a new Next-Lite project with a basic structure and start the development server.
+
+## Manual Installation
+
+If you prefer to set up a project manually, you can install Next-Lite in an existing project:
+
+```bash
+npm install next-lite-framework
+```
+
+Then, add the following scripts to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "next-lite dev",
+    "build": "next-lite build",
+    "start": "next-lite start"
+  }
+}
+```
+
+## Project Structure
+
+A basic Next-Lite project has the following structure:
+
+```
+my-app/
+├── pages/
+│   ├── api/
+│   │   └── hello.js
+│   └── index.jsx
+├── public/
+│   └── favicon.ico
+├── styles/
+│   ├── globals.css
+│   └── Home.module.css
+├── next-lite.config.js
+├── package.json
+└── index.html
+```
+
+- `pages/`: Contains all your pages and API routes
+- `public/`: Static assets that will be served at the root path
+- `styles/`: CSS files for styling your application
+- `next-lite.config.js`: Configuration file for Next-Lite
+- `index.html`: HTML template for your application
+
+## TypeScript Support
+
+Next-Lite has built-in TypeScript support. To use TypeScript, create a `tsconfig.json` file in your project root:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```
+
+Then, you can use TypeScript in your project:
+
+```tsx
+// pages/index.tsx
+import React from 'react';
+import { Head } from 'next-lite-framework';
+
+interface HomeProps {
+  title: string;
+}
+
+export default function Home({ title }: HomeProps) {
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <div>
+        <h1>{title}</h1>
+        <p>Welcome to Next-Lite!</p>
+      </div>
+    </>
+  );
+}
+
+export function getStaticProps() {
+  return {
+    props: {
+      title: 'Home | Next-Lite'
+    }
+  };
+}
+```
+
+## Configuration
+
+You can configure Next-Lite by creating a `next-lite.config.js` file in your project root:
+
+```js
+module.exports = {
+  server: {
+    port: 3000,
+    host: 'localhost'
+  },
+  build: {
+    target: ['es2015'],
+    minify: true,
+    sourcemap: true,
+    outDir: '.next'
+  },
+  images: {
+    domains: ['example.com'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    path: '/_next/image',
+    loader: 'default'
+  },
+  experimental: {
+    ssr: false,
+    concurrentFeatures: false,
+    optimizeCss: false,
+    scrollRestoration: false
+  },
+  env: {
+    API_URL: 'https://api.example.com'
+  }
+};
+```
+
+## Next Steps
+
+Now that you have installed Next-Lite, you can:
+
+- [Create your first page](/docs/getting-started/first-page)
+- [Learn about routing](/docs/routing)
+- [Set up API routes](/docs/api-routes)
+- [Add styling to your application](/docs/styling)
