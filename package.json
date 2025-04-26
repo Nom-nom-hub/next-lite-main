@@ -1,16 +1,28 @@
 {
   "name": "next-lite-framework",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A lightweight alternative to Next.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0",
-    "build": "echo \"No build specified\" && exit 0"
+    "build": "echo \"No build specified\" && exit 0",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "react",
-    "framework"
+    "framework",
+    "nextjs",
+    "lightweight",
+    "fast"
   ],
   "author": "Teck",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nom-nom-hub/next-lite-main.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nom-nom-hub/next-lite-main/issues"
+  },
+  "homepage": "https://github.com/Nom-nom-hub/next-lite-main#readme"
 }
