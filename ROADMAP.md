@@ -30,7 +30,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### Rendering
 - [x] Client-side rendering
-- [ ] Server-side rendering (SSR)
+- [x] Server-side rendering (SSR)
 - [ ] Static site generation (SSG)
 - [ ] Incremental static regeneration (ISR)
 - [ ] Streaming SSR
@@ -54,7 +54,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Minimal bundle size
 - [x] Fast build times
 - [ ] Automatic code splitting
-- [ ] Image optimization
+- [x] Image optimization
 - [ ] Font optimization
 - [ ] Script optimization
 - [ ] Performance monitoring tools
@@ -93,7 +93,7 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 ### Guides
 - [x] Basic README with getting started guide
-- [ ] Comprehensive documentation website
+- [x] Comprehensive documentation website
 - [x] Installation and setup guides
 - [x] Routing documentation
 - [x] Data fetching guides
@@ -191,9 +191,9 @@ This document outlines the development roadmap for the Next-Lite framework and i
 - [x] Add tests
 
 ### v0.5.0
-- [ ] Implement SSR
-- [ ] Add image optimization
-- [ ] Create documentation website
+- [x] Implement SSR
+- [x] Add image optimization
+- [x] Create documentation website
 - [ ] Improve developer experience
 
 ### v1.0.0
@@ -206,4 +206,4 @@ This document outlines the development roadmap for the Next-Lite framework and i
 
 This roadmap is a living document and will be updated as the project evolves. Priorities may shift based on community feedback and emerging needs.
 
-Last updated: April 26, 2025 (TypeScript template, examples, documentation, and tests added)
+Last updated: April 26, 2025 (SSR, image optimization, and documentation website added)
