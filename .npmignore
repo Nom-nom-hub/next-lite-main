@@ -26,3 +26,6 @@ tsconfig.json
 # OS
 .DS_Store
 Thumbs.db
+
+# node
+node_modules/
