@@ -1,11 +1,13 @@
 {
   "name": "next-lite-framework",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A lightweight alternative to Next.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests specified\" && exit 0",
-    "build": "echo \"No build specified\" && exit 0",
+    "test": "jest",
+    "build": "node scripts/build.js",
+    "dev": "node scripts/dev.js",
+    "start": "node scripts/start.js",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -24,5 +26,18 @@
   "bugs": {
     "url": "https://github.com/Nom-nom-hub/next-lite-main/issues"
   },
-  "homepage": "https://github.com/Nom-nom-hub/next-lite-main#readme"
+  "homepage": "https://github.com/Nom-nom-hub/next-lite-main#readme",
+  "dependencies": {
+    "canvas": "^2.11.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.18",
+    "jest": "^29.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
