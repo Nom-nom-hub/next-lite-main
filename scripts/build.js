@@ -23,19 +23,13 @@ async function build() {
       sourcemap: true,
     });
 
-    // Build the client bundle
-    await esbuild.build({
-      entryPoints: ['src/client/hydrate.js'],
-      bundle: true,
-      outfile: 'dist/client.js',
-      format: 'iife',
-      platform: 'browser',
-      target: ['es2018'],
-      external: ['react', 'react-dom'],
-      plugins: [cssModulesPlugin()],
+    // Build the client bundle with code splitting
+    const { buildWithCodeSplitting } = require('./code-splitting');
+    await buildWithCodeSplitting({
+      dir: process.cwd(),
+      outdir: 'dist/client',
       minify: true,
-      sourcemap: true,
-      globalName: 'NextLite'
+      sourcemap: true
     });
 
     // Build the legacy framework components

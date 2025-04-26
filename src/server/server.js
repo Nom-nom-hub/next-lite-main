@@ -12,49 +12,83 @@ const { renderPage } = require('./render');
  * @param {string} options.dir - Root directory
  * @param {number} options.port - Port to listen on
  * @param {boolean} options.dev - Whether to run in development mode
+ * @param {Object} options.i18n - Internationalization options
+ * @param {string} options.i18n.defaultLocale - Default locale
+ * @param {Array<string>} options.i18n.locales - Supported locales
  * @returns {Object} - Server instance
  */
-function createServer({ dir = process.cwd(), port = 3000, dev = false }) {
+function createServer({
+  dir = process.cwd(),
+  port = 3000,
+  dev = false,
+  i18n = { defaultLocale: 'en', locales: ['en'] }
+}) {
   // Pages directory
   const pagesDir = path.join(dir, 'pages');
-  
+
   // Static directory
   const staticDir = path.join(dir, 'public');
-  
+
   // Build directory
   const buildDir = path.join(dir, '.next');
-  
+
+  // Load environment variables
+  const { loadEnv } = require('./env');
+  const { serverEnv, clientEnv } = loadEnv({ dir, dev });
+
+  // Create middleware handler
+  const { createMiddlewareHandler } = require('./middleware');
+  const middlewareHandler = createMiddlewareHandler({ dir });
+
   // Create HTTP server
   const server = http.createServer(async (req, res) => {
     try {
       const parsedUrl = url.parse(req.url, true);
       const { pathname, query } = parsedUrl;
-      
+
       // Add query to request object
       req.query = query;
-      
-      // Handle static files
-      if (pathname.startsWith('/static/') || pathname.startsWith('/_next/static/')) {
-        return serveStatic(req, res, pathname, staticDir, buildDir);
-      }
-      
-      // Handle API routes
-      if (pathname.startsWith('/api/')) {
-        return handleApiRoute(req, res, pathname, pagesDir);
-      }
-      
-      // Handle page routes
-      return handlePageRoute(req, res, pathname, pagesDir, buildDir, dev);
+
+      // Handle i18n
+      const { getLocaleFromRequest } = require('../shared/i18n');
+      const locale = getLocaleFromRequest(req, i18n);
+
+      // Add locale to request
+      req.locale = locale;
+      req.defaultLocale = i18n.defaultLocale;
+      req.locales = i18n.locales;
+
+      // Run middleware
+      middlewareHandler(req, res, () => {
+        try {
+          // Handle static files
+          if (pathname.startsWith('/static/') || pathname.startsWith('/_next/static/')) {
+            return serveStatic(req, res, pathname, staticDir, buildDir);
+          }
+
+          // Handle API routes
+          if (pathname.startsWith('/api/')) {
+            return handleApiRoute(req, res, pathname, pagesDir);
+          }
+
+          // Handle page routes
+          return handlePageRoute(req, res, pathname, pagesDir, buildDir, dev, i18n);
+        } catch (error) {
+          console.error('Error handling request:', error);
+          res.statusCode = 500;
+          res.end('Internal Server Error');
+        }
+      });
     } catch (error) {
       console.error('Error handling request:', error);
       res.statusCode = 500;
       res.end('Internal Server Error');
     }
   });
-  
+
   return {
     server,
-    
+
     /**
      * Start the server
      * @returns {Promise} - Promise that resolves when the server starts
@@ -71,7 +105,7 @@ function createServer({ dir = process.cwd(), port = 3000, dev = false }) {
         });
       });
     },
-    
+
     /**
      * Stop the server
      * @returns {Promise} - Promise that resolves when the server stops
@@ -106,17 +140,17 @@ function serveStatic(req, res, pathname, staticDir, buildDir) {
   } else {
     filePath = path.join(staticDir, pathname.replace('/static/', ''));
   }
-  
+
   // Check if file exists
   if (!fs.existsSync(filePath)) {
     res.statusCode = 404;
     res.end('Not Found');
     return;
   }
-  
+
   // Get file extension
   const ext = path.extname(filePath).toLowerCase();
-  
+
   // Set content type
   const contentTypes = {
     '.html': 'text/html',
@@ -129,9 +163,9 @@ function serveStatic(req, res, pathname, staticDir, buildDir) {
     '.svg': 'image/svg+xml',
     '.ico': 'image/x-icon'
   };
-  
+
   const contentType = contentTypes[ext] || 'application/octet-stream';
-  
+
   // Read and serve the file
   fs.readFile(filePath, (err, data) => {
     if (err) {
@@ -139,7 +173,7 @@ function serveStatic(req, res, pathname, staticDir, buildDir) {
       res.end('Internal Server Error');
       return;
     }
-    
+
     res.setHeader('Content-Type', contentType);
     res.end(data);
   });
@@ -155,18 +189,18 @@ function serveStatic(req, res, pathname, staticDir, buildDir) {
 async function handleApiRoute(req, res, pathname, pagesDir) {
   // Convert pathname to file path
   const apiPath = path.join(pagesDir, pathname.replace(/\/$/, '') + '.js');
-  
+
   // Check if API route exists
   if (!fs.existsSync(apiPath)) {
     res.statusCode = 404;
     res.end('Not Found');
     return;
   }
-  
+
   try {
     // Import API handler
     const apiHandler = require(apiPath).default;
-    
+
     // Call API handler
     await apiHandler(req, res);
   } catch (error) {
@@ -184,14 +218,15 @@ async function handleApiRoute(req, res, pathname, pagesDir) {
  * @param {string} pagesDir - Pages directory
  * @param {string} buildDir - Build directory
  * @param {boolean} dev - Whether to run in development mode
+ * @param {Object} i18n - Internationalization options
  */
-async function handlePageRoute(req, res, pathname, pagesDir, buildDir, dev) {
+async function handlePageRoute(req, res, pathname, pagesDir, buildDir, dev, i18n) {
   // Normalize pathname
   const normalizedPathname = pathname === '/' ? '/index' : pathname.replace(/\/$/, '');
-  
+
   // Convert pathname to file path
   const pagePath = path.join(pagesDir, normalizedPathname + '.js');
-  
+
   // Check if page exists
   if (!fs.existsSync(pagePath)) {
     // Check for 404 page
@@ -203,18 +238,56 @@ async function handlePageRoute(req, res, pathname, pagesDir, buildDir, dev) {
       res.end(html);
       return;
     }
-    
+
     // Default 404 response
     res.statusCode = 404;
     res.setHeader('Content-Type', 'text/html');
     res.end('<h1>404 - Page Not Found</h1>');
     return;
   }
-  
+
   try {
-    // Render the page
+    // Check if this is a static page with ISR
+    const page = require(pagePath).default;
+
+    if (page && page.getStaticProps) {
+      // This is a static page
+      const { serveWithRevalidation } = require('./incremental-regeneration');
+
+      // Get the revalidation time
+      let revalidate = 0;
+
+      if (page.getStaticProps) {
+        // Call getStaticProps to get the revalidation time
+        const staticPropsResult = await page.getStaticProps({ params: {} });
+        revalidate = staticPropsResult.revalidate || 0;
+      }
+
+      // If revalidate is set, use ISR
+      if (revalidate > 0) {
+        // Get the output path for this page
+        const outputPath = path.join(buildDir, 'static', normalizedPathname, 'index.html');
+
+        // Serve the page with revalidation
+        const html = await serveWithRevalidation({
+          outputPath,
+          pagePath,
+          params: {},
+          revalidate,
+          req,
+          res
+        });
+
+        // Send the response
+        res.setHeader('Content-Type', 'text/html');
+        res.end(html);
+        return;
+      }
+    }
+
+    // If not a static page or no revalidation, render normally
     const html = await renderPage({ pagePath, req, res });
-    
+
     // Send the response
     res.setHeader('Content-Type', 'text/html');
     res.end(html);
