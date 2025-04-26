@@ -5,6 +5,21 @@ All notable changes to the Next-Lite Framework will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-04-26
+
+### Added
+- TypeScript template for create-next-lite-app
+- Comprehensive documentation with guides and API references
+- Unit, integration, and end-to-end tests
+- Example projects showcasing framework features
+- Basic and TypeScript examples
+- Updated ROADMAP.md with project progress
+
+### Changed
+- Improved README.md with logo and badges
+- Enhanced create-next-lite-app with better error handling
+- Updated package.json with more accurate metadata
+
 ## [0.3.1] - 2025-04-26
 
 ### Fixed
